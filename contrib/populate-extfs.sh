@@ -9,7 +9,7 @@ export LANGUAGE=en_US:en
 
 do_usage () {
 	cat << _EOF
-Usage: populate-extfs.sh <source> <device>
+Usage: populate-extfs.sh <source> <device> <cfgfile>
 Create an ext2/ext3/ext4 filesystem from a directory or file
 
   source: The source directory or file
