@@ -64,7 +64,6 @@ do_getfilecfgmode () {
 	done
 }
 
-
 [ $# -ne 3 ] && do_usage
 
 SRCDIR=${1%%/}
