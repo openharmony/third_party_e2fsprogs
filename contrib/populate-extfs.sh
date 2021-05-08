@@ -51,7 +51,7 @@ do_getfilecfgmode () {
 	_NEW_FILEMODE_=$2
 	_NEW_FILEUID_=0
 	_NEW_FILEGID_=0
-	while [ $i -lt ${CONFIG_ARRAY[@]} ]
+	while [ $i -lt ${#CONFIG_ARRAY[@]} ]
 	do
 		if [ "$1" == "${CONFIG_ARRAY[$i]}" ]; then
 			# Change file mode from OCT to HEX.
