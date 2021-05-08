@@ -3,6 +3,9 @@
 # This script uses debugfs command to populate the ext2/3/4 filesystem
 # from a given directory.
 #
+# Added mode, uid and gid config function by OpenHarmony team. 
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US:en
 
 do_usage () {
 	cat << _EOF
@@ -16,15 +19,64 @@ _EOF
 	exit 1
 }
 
+CFGFILE_CNT=5
+FILEMODE_IDX=2
+FILEU_IDX=3
+FILEG_IDX=4
+_NEW_FILEMODE=0
+_NEW_FILEUID=0
+_NEW_FILEGID=0
+
+declare -a CONFIG_ARRAY
+
+do_parsecfgfile () {
+	i=0
+	while read _BINFILE_ _FILETYPE_ _FILEMODE_ _FILEUID_ _FILEGID_
+	do
+		CONFIG_ARRAY[${i}]=${_BINFILE_}
+		i=$[$i+1]
+		CONFIG_ARRAY[${i}]=${_FILETYPE_}
+		i=$[$i+1]
+		CONFIG_ARRAY[${i}]=${_FILEMODE_}
+		i=$[$i+1]
+		CONFIG_ARRAY[${i}]=${_FILEUID_}
+		i=$[$i+1]
+		CONFIG_ARRAY[${i}]=${_FILEGID_}
+		i=$[$i+1]
+	done < ${CFGFILE}
+}
+
+do_getfilecfgmode () {
+	i=0
+	_NEW_FILEMODE_=$2
+	_NEW_FILEUID=0
+	_NEW_FILEGID=0
+	while [ $i -lt ${CONFIG_ARRAY[@]} ]
+	do
+		if [ "$1" == "${CONFIG_ARRAY[@]}" ]; then
+			# change file mode from OCT to HEX
+			_NEW_FILEMODE_=$(echo "obase=16;$((0x$MODE & (~0777) | 0${CONFIG_ARRAY[$i+${FILEMODE_IDX}]}))"|bc)
+			_NEW_FILEUID_=${CONFIG_ARRAY[$i+${FILEU_IDX}]}
+			_NEW_FILLEGID_=${CONFIG_ARRAY[$i+${FILEG_IDX}]}
+			return 0
+		fi
+		i=$[$i+${CFGFILE_CNT}]
+	done
+}
+
+
 [ $# -ne 2 ] && do_usage
 
 SRCDIR=${1%%/}
 DEVICE=$2
+CFGFILE=$3
+
+# parse config file
+do_parsecfgfile
 
 # Find where is the debugfs command if not found in the env.
 if [ -z "$DEBUGFS" ]; then
-	CONTRIB_DIR=$(dirname $(readlink -f $0))
-	DEBUGFS="$CONTRIB_DIR/../debugfs/debugfs"
+	echo >&2 "debugfs is required, please install by \"apt-get install e2fsprogs\". Aborting."; exit 1;
 fi
 
 {
@@ -72,6 +124,10 @@ fi
 			;;
 		esac
 
+		do_getfilecfgmode ${FILE#$SRCDIR} $MODE $U $G
+		MODE=${_NEW_FILEMODE_}
+		U=${_NEW_FILEUID_}
+		G=${_NEW_FILEGID_}
 		# Set the file mode
 		echo "sif $TGT mode 0x$MODE"
 
