@@ -1,0 +1,79 @@
+import("//build/ohos.gni")
+
+ohos_prebuilt_executable("mke2fs") {
+    source = "bin/mke2fs"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_executable("e2fsdroid") {
+    source = "bin/e2fsdroid"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_executable("e2fsck") {
+    source = "bin/e2fsck"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libext2_blkid") {
+    source = "lib/libext2_blkid.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+
+ohos_prebuilt_shared_library("libext2_com_err") {
+    source = "lib/libext2_com_err.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libext2_e2p") {
+    source = "lib/libext2_e2p.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libext2fs"){
+    source = "lib/libext2fs.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libext2_misc"){
+    source = "lib/libext2_misc.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libext2_quota") {
+    source = "lib/libext2_quota.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libext2_uuid") {
+    source = "lib/libext2_uuid.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}
+
+ohos_prebuilt_shared_library("libcrypto") {
+    source = "lib/libcrypto.so"
+    subsystem_name = "distributeddatamgr"
+    part_name = "e2fsprogs"
+    install_enable= true
+}

@@ -1,0 +1,20 @@
+import("//build/ohos.gni")
+
+group("e2fsprogs") {
+    deps = [
+        "//third_party/e2fsprogs/prebuilt/target:mke2fs",
+        "//third_party/e2fsprogs/prebuilt/target:e2fsdroid",
+        "//third_party/e2fsprogs/prebuilt/target:e2fsck",
+        "//third_party/e2fsprogs/prebuilt/target:libext2_blkid",
+        "//third_party/e2fsprogs/prebuilt/target:libext2_com_err",
+        "//third_party/e2fsprogs/prebuilt/target:libext2_e2p",
+        "//third_party/e2fsprogs/prebuilt/target:libext2fs",
+        "//third_party/e2fsprogs/prebuilt/target:libext2_misc",
+        "//third_party/e2fsprogs/prebuilt/target:libext2_quota",
+        "//third_party/e2fsprogs/prebuilt/target:libext2_uuid",
+        "//third_party/e2fsprogs/prebuilt/target:libcrypto", # boringssl not support
+    ]
+    public_deps = [
+        "//third_party/boringssl:crypto"
+    ]
+}
