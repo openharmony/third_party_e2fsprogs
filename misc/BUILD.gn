@@ -42,7 +42,7 @@ ohos_shared_library("libext2_misc") {
 
 ###################################################
 ##Build mke2fs
-ohos_executable("mke2fs_hos") {
+ohos_executable("mke2fs") {
   configs = [ ":e2fsprogs-defaults" ]
   sources = [
     "default_profile.c",
