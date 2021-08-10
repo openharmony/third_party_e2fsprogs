@@ -29,6 +29,7 @@
                 <policyitem type="compatibility" name="BSDStyleLicense|LGPLStyleLicense" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
                 <policyitem type="compatibility" name="InvalidLicense" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
                 <policyitem type="compatibility" name="GPL-2.0-or-later" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
+                <policyitem type="compatibility" name="Latex2e" path=".*" desc="It's not a license, OAT tools check error."/>
             </policy>
         </policylist>
     </oatconfig>
