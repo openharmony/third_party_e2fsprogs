@@ -1,0 +1,81 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+config("e2fsprogs-defaults") {
+  cflags = [
+    "-Wall",
+    "-Werror",
+  ]
+}
+config("libext2-headers") {
+  include_dirs = [ "//third_party/e2fsprogs/lib" ]
+}
+
+ohos_shared_library("libext2_quota") {
+  sources = [
+    "dict.c",
+    "mkquota.c",
+    "parse_qtype.c",
+    "plausible.c",
+    "prof_err.c",
+    "profile.c",
+    "profile_helpers.c",
+    "quotaio.c",
+    "quotaio_tree.c",
+    "quotaio_v2.c",
+  ]
+  include_dirs = [ "." ]
+  configs = [
+    ":e2fsprogs-defaults",
+    ":libext2-headers",
+  ]
+  deps = [
+    "//third_party/e2fsprogs/lib/blkid:libext2_blkid",
+    "//third_party/e2fsprogs/lib/et:libext2_com_err",
+    "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
+  ]
+  install_enable = true
+  part_name = "e2fsprogs"
+  install_images = [
+    "system",
+    "updater",
+  ]
+}
+
+ohos_static_library("libext2_profile") {
+  sources = [
+    "prof_err.c",
+    "profile.c",
+  ]
+  include_dirs = [ "." ]
+  configs = [
+    ":libext2-headers",
+    ":e2fsprogs-defaults",
+  ]
+
+  deps = [
+    "//third_party/e2fsprogs/lib/et:libext2_com_err",
+  ]
+}
+
+ohos_static_library("libext2_support") {
+  sources = [
+    "cstring.c",
+  ]
+  include_dirs = [ "." ]
+  configs = [
+    ":e2fsprogs-defaults",
+    ":libext2-headers",
+  ]
+}

@@ -1,0 +1,83 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+config("e2fsprogs-defaults") {
+  cflags = [ "-Wno-pointer-sign" ]
+}
+
+ohos_shared_library("libext2_misc") {
+  configs = [ ":e2fsprogs-defaults" ]
+  sources = [
+    "create_inode.c",
+  ]
+  include_dirs = [
+    ".",
+    "//third_party/e2fsprogs/lib",
+  ]
+  cflags = [ "-Wno-error=format-extra-args" ]
+
+  deps = [
+    "//third_party/e2fsprogs/lib/et:libext2_com_err",
+    "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
+    "//third_party/e2fsprogs/lib/support:libext2_quota",
+  ]
+  install_enable = true
+  part_name = "e2fsprogs"
+  install_images = [
+    "system",
+    "updater",
+  ]
+}
+
+###################################################
+##Build mke2fs
+ohos_executable("mke2fs_hos") {
+  configs = [ ":e2fsprogs-defaults" ]
+  sources = [
+    "default_profile.c",
+    "mk_hugefiles.c",
+    "mke2fs.c",
+    "util.c",
+  ]
+
+  include_dirs = [
+    ".",
+    "//third_party/e2fsprogs/e2fsck",
+    "//third_party/e2fsprogs/lib",
+    "//third_party/e2fsprogs/lib/ext2fs",
+  ]
+  cflags = [
+    "-Wno-error=format",
+    "-Wno-error=type-limits",
+    "-Wno-format-extra-args",
+  ]
+
+  deps = [
+    "//third_party/e2fsprogs/lib/blkid:libext2_blkid",
+    "//third_party/e2fsprogs/lib/e2p:libext2_e2p",
+    "//third_party/e2fsprogs/lib/et:libext2_com_err",
+    "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
+    "//third_party/e2fsprogs/lib/support:libext2_quota",
+    "//third_party/e2fsprogs/lib/uuid:libext2_uuid",
+    "//third_party/e2fsprogs/misc:libext2_misc",
+  ]
+
+  ldflags = [ "-stdlib=libc++_static" ]
+  install_enable = true
+  part_name = "e2fsprogs"
+  install_images = [
+    "system",
+    "updater",
+  ]
+}
