@@ -39,7 +39,5 @@ ohos_static_library("libext2_ss") {
   include_dirs = [ "." ]
   configs = [ ":libext2-headers" ]
 
-  deps = [
-    "//third_party/e2fsprogs/lib/et:libext2_com_err",
-  ]
+  deps = [ "//third_party/e2fsprogs/lib/et:libext2_com_err" ]
 }

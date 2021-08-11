@@ -18,9 +18,7 @@ config("e2fsprogs-defaults") {
 
 ohos_shared_library("libext2_misc") {
   configs = [ ":e2fsprogs-defaults" ]
-  sources = [
-    "create_inode.c",
-  ]
+  sources = [ "create_inode.c" ]
   include_dirs = [
     ".",
     "//third_party/e2fsprogs/lib",

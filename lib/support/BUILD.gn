@@ -64,15 +64,11 @@ ohos_static_library("libext2_profile") {
     ":e2fsprogs-defaults",
   ]
 
-  deps = [
-    "//third_party/e2fsprogs/lib/et:libext2_com_err",
-  ]
+  deps = [ "//third_party/e2fsprogs/lib/et:libext2_com_err" ]
 }
 
 ohos_static_library("libext2_support") {
-  sources = [
-    "cstring.c",
-  ]
+  sources = [ "cstring.c" ]
   include_dirs = [ "." ]
   configs = [
     ":e2fsprogs-defaults",

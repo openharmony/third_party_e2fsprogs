@@ -45,9 +45,7 @@ ohos_shared_library("libext2_blkid") {
   ]
 
   include_dirs = [ "." ]
-  deps = [
-    "//third_party/e2fsprogs/lib/uuid:libext2_uuid",
-  ]
+  deps = [ "//third_party/e2fsprogs/lib/uuid:libext2_uuid" ]
   cflags = [
     "-Wno-error=attributes",
     "-Wno-error=pointer-sign",
