@@ -12,9 +12,8 @@ group("e2fsprogs") {
     "//third_party/e2fsprogs/misc:mke2fs",
     "//third_party/e2fsprogs/prebuilt/target:e2fsck",
     "//third_party/e2fsprogs/prebuilt/target:e2fsdroid",
-    "//third_party/e2fsprogs/prebuilt/target:libcrypto",  # boringssl not support
+    "//third_party/e2fsprogs/prebuilt/target:libcrypto",  # boringssl not
+                                                          # support
   ]
-  public_deps = [
-    "//third_party/boringssl:crypto",
-  ]
+  public_deps = [ "//third_party/boringssl:crypto" ]
 }
