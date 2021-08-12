@@ -5,10 +5,6 @@ ohos_prebuilt_executable("mke2fs") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_executable("e2fsdroid") {
@@ -16,10 +12,6 @@ ohos_prebuilt_executable("e2fsdroid") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_executable("e2fsck") {
@@ -27,10 +19,6 @@ ohos_prebuilt_executable("e2fsck") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2_blkid") {
@@ -38,10 +26,6 @@ ohos_prebuilt_shared_library("libext2_blkid") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2_com_err") {
@@ -49,10 +33,6 @@ ohos_prebuilt_shared_library("libext2_com_err") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2_e2p") {
@@ -60,10 +40,6 @@ ohos_prebuilt_shared_library("libext2_e2p") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2fs") {
@@ -71,10 +47,6 @@ ohos_prebuilt_shared_library("libext2fs") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2_misc") {
@@ -82,10 +54,6 @@ ohos_prebuilt_shared_library("libext2_misc") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2_quota") {
@@ -93,10 +61,6 @@ ohos_prebuilt_shared_library("libext2_quota") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libext2_uuid") {
@@ -104,10 +68,6 @@ ohos_prebuilt_shared_library("libext2_uuid") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
 
 ohos_prebuilt_shared_library("libcrypto") {
@@ -115,8 +75,4 @@ ohos_prebuilt_shared_library("libcrypto") {
   subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_enable = true
-  install_images = [
-    "system",
-    "updater",
-  ]
 }
