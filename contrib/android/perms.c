@@ -358,16 +358,25 @@ errcode_t android_configure_fs(ext2_filsys fs, char *src_dir, char *target_out,
 
 	/* Load the FS config */
 	if (fs_config_file) {
+#if defined(__ANDROID__)
 		retval = load_canned_fs_config(fs_config_file);
+#else
+		retval = LoadDacConfig(fs_config_file);
+#endif
 		if (retval < 0) {
 			com_err(__func__, retval,
 				_("while loading fs_config \"%s\""),
 				fs_config_file);
 			return retval;
 		}
+#if defined(__ANDROID__)
 		fs_config_func = canned_fs_config;
 	} else if (mountpoint)
 		fs_config_func = fs_config;
+#else
+		fs_config_func = GetDacConfig;
+	}
+#endif
 
 	return __android_configure_fs(fs, src_dir, target_out, mountpoint,
 				      fs_config_func, sehnd, fixed_time,
