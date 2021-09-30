@@ -32,12 +32,13 @@
                 <policyitem type="compatibility" name="Latex2e" path=".*" desc="It's not a license, OAT tools check error."/>
             </policy>
         </policylist>
-        <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file polices" >
-            <filteritem type="filename" name="*.gmo|*.bz2|*.gz|*.po|*.so" desc="original files"/>
-            <filteritem type="filepath" name="prebuilt/target/bin/.*" desc="original bins"/>
-            <filteritem type="filepath" name="prebuilt/host/bin/.*" desc="original bins"/>
-            <filteritem type="filepath" name="tests/.*" desc="original bins"/>
-            <filteritem type="filepath" name="./.*" desc="original bins"/>
-        </filefilter>
+        <filefilterlist>
+            <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file polices" >
+                <filteritem type="filename" name="*.gmo|*.bz2|*.gz|*.po|*.so" desc="original files"/>
+                <filteritem type="filepath" name="prebuilt/target/bin/.*" desc="original bins"/>
+                <filteritem type="filepath" name="prebuilt/host/bin/.*" desc="original bins"/>
+                <filteritem type="filepath" name="tests/.*" desc="original bins"/>
+            </filefilter>
+        </filefilterlist>
     </oatconfig>
 </configuration>
