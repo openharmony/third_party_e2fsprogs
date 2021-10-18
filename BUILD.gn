@@ -14,6 +14,7 @@ group("e2fsprogs") {
     "//third_party/e2fsprogs/prebuilt/target:e2fsdroid",
     "//third_party/e2fsprogs/prebuilt/target:libcrypto",  # boringssl not
                                                           # support
+    "//third_party/e2fsprogs/resize:resize2fs",
   ]
   public_deps = [ "//third_party/boringssl:crypto" ]
 }
