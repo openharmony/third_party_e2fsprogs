@@ -16,37 +16,16 @@ config("e2fsprogs-defaults") {
   cflags = [ "-Wno-pointer-sign" ]
 }
 
-ohos_shared_library("libext2_misc") {
-  configs = [ ":e2fsprogs-defaults" ]
-  sources = [ "create_inode.c" ]
-  include_dirs = [
-    ".",
-    "//third_party/e2fsprogs/lib",
-  ]
-  cflags = [ "-Wno-error=format-extra-args" ]
-
-  deps = [
-    "//third_party/e2fsprogs/lib/et:libext2_com_err",
-    "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
-    "//third_party/e2fsprogs/lib/support:libext2_quota",
-  ]
-  install_enable = true
-  part_name = "e2fsprogs"
-  install_images = [
-    "system",
-    "updater",
-  ]
-}
-
-###################################################
-###Build mke2fs
-ohos_executable("mke2fs") {
+##Build resize2fs
+ohos_executable("resize2fs") {
   configs = [ ":e2fsprogs-defaults" ]
   sources = [
-    "default_profile.c",
-    "mk_hugefiles.c",
-    "mke2fs.c",
-    "util.c",
+    "extent.c",
+    "main.c",
+    "online.c",
+    "resize2fs.c",
+    "resource_track.c",
+    "sim_progress.c",
   ]
 
   include_dirs = [
@@ -74,8 +53,5 @@ ohos_executable("mke2fs") {
   ldflags = [ "-stdlib=libc++_static" ]
   install_enable = true
   part_name = "e2fsprogs"
-  install_images = [
-    "system",
-    "updater",
-  ]
+  install_images = [ "updater" ]
 }
