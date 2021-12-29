@@ -71,7 +71,6 @@ ohos_executable("mke2fs") {
     "//third_party/e2fsprogs/misc:libext2_misc",
   ]
 
-  ldflags = [ "-stdlib=libc++_static" ]
   install_enable = true
   part_name = "e2fsprogs"
   install_images = [
