@@ -3,6 +3,7 @@
 #endif
 #include "perms.h"
 #include "support/nls-enable.h"
+#include <linux/capability.h>
 #include <time.h>
 #include <sys/stat.h>
 

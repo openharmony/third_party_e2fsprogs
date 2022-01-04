@@ -72,7 +72,7 @@
 /* #undef HAVE_ATTR_XATTR_H */
 
 /* Define to 1 if you have the `backtrace' function. */
-#define HAVE_BACKTRACE 1
+/* #define HAVE_BACKTRACE 1 */
 
 /* Define to 1 if blkid has blkid_probe_enable_partitions */
 /* #undef HAVE_BLKID_PROBE_ENABLE_PARTITIONS */
@@ -131,7 +131,7 @@
 #define HAVE_ERRNO_H 1
 
 /* Define to 1 if you have the <execinfo.h> header file. */
-#define HAVE_EXECINFO_H 1
+/* #define HAVE_EXECINFO_H 1 */
 
 /* Define to 1 if Ext2 ioctls present */
 #define HAVE_EXT2_IOCTLS 1
@@ -544,7 +544,7 @@
 #define HAVE_SYS_SYSCALL_H 1
 
 /* Define to 1 if you have the <sys/sysctl.h> header file. */
-#define HAVE_SYS_SYSCTL_H 1
+/* #define HAVE_SYS_SYSCTL_H 1 */
 
 /* Define to 1 if you have the <sys/sysmacros.h> header file. */
 #define HAVE_SYS_SYSMACROS_H 1

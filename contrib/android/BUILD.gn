@@ -17,10 +17,55 @@ import("//developtools/profiler/build/config.gni")
 
 ohos_static_library("libdacconfig") {
   output_name = "libdacconfig"
-  install_enable = true
 
   sources = [ "dac_config.cpp" ]
 
   part_name = "e2fsprogs"
   subsystem_name = "distributeddatamgr"
+}
+config("e2fsprogs-defaults") {
+  cflags = [
+    "-Wno-incompatible-pointer-types",
+    "-Wno-tautological-constant-out-of-range-compare",
+  ]
+}
+
+######################################################
+##Build e2fsdroid
+ohos_executable("e2fsdroid") {
+  configs = [ ":e2fsprogs-defaults" ]
+
+  defines = [ "HAVE_SYS_TYPES_H" ]
+  sources = [
+    "base_fs.c",
+    "basefs_allocator.c",
+    "block_list.c",
+    "block_range.c",
+    "e2fsdroid.c",
+    "fsmap.c",
+    "perms.c",
+  ]
+
+  include_dirs = [
+    ".",
+    "//third_party/e2fsprogs/lib",
+    "//third_party/e2fsprogs/lib/ext2fs",
+    "//third_party/e2fsprogs/misc",
+    "//third_party/selinux/libselinux/include",
+  ]
+
+  deps = [
+    "//third_party/e2fsprogs/contrib/android:libdacconfig",
+    "//third_party/e2fsprogs/lib/et:libext2_com_err",
+    "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
+    "//third_party/e2fsprogs/misc:libext2_misc",
+    "//third_party/selinux:libselinux",
+  ]
+
+  install_enable = true
+  part_name = "e2fsprogs"
+  install_images = [
+    "system",
+    "updater",
+  ]
 }
