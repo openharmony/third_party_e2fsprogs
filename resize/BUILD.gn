@@ -53,5 +53,8 @@ ohos_executable("resize2fs") {
   ldflags = [ "-stdlib=libc++_static" ]
   install_enable = true
   part_name = "e2fsprogs"
-  install_images = [ "updater" ]
+  install_images = [
+    "system",
+    "updater",
+  ]
 }
