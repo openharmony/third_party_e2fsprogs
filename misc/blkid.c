@@ -17,6 +17,7 @@
 #ifdef HAVE_TERMIOS_H
 #include <termios.h>
 #endif
+#undef HAVE_TERMIO_H
 #ifdef HAVE_TERMIO_H
 #include <termio.h>
 #endif
