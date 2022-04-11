@@ -217,7 +217,7 @@ extern "C" {
         if (it != g_configMap.end()) {
             dacConfig = it->second;
         } else if (dir == 0 && !str.empty()) {
-            for (int i = str.size() - 1; i >= 0; i--) {
+            for (int i = static_cast<int>(str.size()) - 1; i >= 0; i--) {
                 if (str[i] == '/') {
                     break;
                 } else {
