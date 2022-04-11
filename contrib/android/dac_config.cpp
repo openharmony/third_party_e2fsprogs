@@ -198,7 +198,7 @@ extern "C" {
         return 0;
     }
 
-    void GetDacConfig(const char* path, int dir, char* targetOutPath,
+    void GetDacConfig(const char* path, int dir, char*,
             unsigned* uid, unsigned* gid, unsigned* mode,
             uint64_t* capabilities)
     {
@@ -206,25 +206,24 @@ extern "C" {
             path++;
         }
 
-        (void)targetOutPath;
         string str = path;
-        string str2;
         DacConfig dacConfig(00755, 0, 0, 0, "");
 
         if (dir == 0) {
             dacConfig.SetDefault(00644, 0, 0, 0, "");
         }
 
-        if (g_configMap.count(str)) {
-            dacConfig = g_configMap[str];
+        auto it = g_configMap.find(str);
+        if (it != g_configMap.end()) {
+            dacConfig = it->second;
         } else if (dir == 0 && !str.empty()) {
-            for (auto i = str.size() - 1; i >= 0; i--) {
+            for (int i = str.size() - 1; i >= 0; i--) {
                 if (str[i] == '/') {
                     break;
                 } else {
-                    str2 = str.substr(0, i) + "*";
-                    if (g_configMap.count(str2)) {
-                        dacConfig = g_configMap[str2];
+                    it = g_configMap.find(str.substr(0, i) + "*");
+                    if (it != g_configMap.end()) {
+                        dacConfig = it->second;
                         break;
                     }
                 }
