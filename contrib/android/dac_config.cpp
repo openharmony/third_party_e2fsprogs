@@ -202,11 +202,7 @@ extern "C" {
             unsigned* uid, unsigned* gid, unsigned* mode,
             uint64_t* capabilities)
     {
-        if (path && path[0] == '/') {
-            path++;
-        }
-
-        string str = path;
+        string str = (path != nullptr && *path == '/') ? path + 1 : path;
         DacConfig dacConfig(00755, 0, 0, 0, "");
 
         if (dir == 0) {
