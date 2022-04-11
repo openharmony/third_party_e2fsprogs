@@ -35,14 +35,14 @@ struct DacConfig {
     string path;
 
     DacConfig() : uid(0), gid(0), mode(0), capabilities(0), path("") {}
-    DacConfig(unsigned int m, unsigned int u, unsigned int g, uint64_t c, string p) :
+    DacConfig(unsigned int m, unsigned int u, unsigned int g, uint64_t c, const string &p) :
         uid(u),
         gid(g),
         mode(m),
         capabilities(c),
         path(p) {}
 
-    void SetDefault(unsigned int m, unsigned int u, unsigned int g, uint64_t c, string p)
+    void SetDefault(unsigned int m, unsigned int u, unsigned int g, uint64_t c, const string &p)
     {
         this->uid = u;
         this->gid = g;
