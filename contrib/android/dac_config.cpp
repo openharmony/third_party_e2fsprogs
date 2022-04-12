@@ -35,14 +35,14 @@ struct DacConfig {
     string path;
 
     DacConfig() : uid(0), gid(0), mode(0), capabilities(0), path("") {}
-    DacConfig(unsigned int m, unsigned int u, unsigned int g, uint64_t c, string p) :
+    DacConfig(unsigned int m, unsigned int u, unsigned int g, uint64_t c, const string &p) :
         uid(u),
         gid(g),
         mode(m),
         capabilities(c),
         path(p) {}
 
-    void SetDefault(unsigned int m, unsigned int u, unsigned int g, uint64_t c, string p)
+    void SetDefault(unsigned int m, unsigned int u, unsigned int g, uint64_t c, const string &p)
     {
         this->uid = u;
         this->gid = g;
@@ -198,33 +198,28 @@ extern "C" {
         return 0;
     }
 
-    void GetDacConfig(const char* path, int dir, char* targetOutPath,
+    void GetDacConfig(const char* path, int dir, char*,
             unsigned* uid, unsigned* gid, unsigned* mode,
             uint64_t* capabilities)
     {
-        if (path && path[0] == '/') {
-            path++;
-        }
-
-        (void)targetOutPath;
-        string str = path;
-        string str2;
+        string str = (path != nullptr && *path == '/') ? path + 1 : path;
         DacConfig dacConfig(00755, 0, 0, 0, "");
 
         if (dir == 0) {
             dacConfig.SetDefault(00644, 0, 0, 0, "");
         }
 
-        if (g_configMap.count(str)) {
-            dacConfig = g_configMap[str];
+        auto it = g_configMap.find(str);
+        if (it != g_configMap.end()) {
+            dacConfig = it->second;
         } else if (dir == 0 && !str.empty()) {
-            for (auto i = str.size() - 1; i >= 0; i--) {
+            for (int i = static_cast<int>(str.size()) - 1; i >= 0; i--) {
                 if (str[i] == '/') {
                     break;
                 } else {
-                    str2 = str.substr(0, i) + "*";
-                    if (g_configMap.count(str2)) {
-                        dacConfig = g_configMap[str2];
+                    it = g_configMap.find(str.substr(0, i) + "*");
+                    if (it != g_configMap.end()) {
+                        dacConfig = it->second;
                         break;
                     }
                 }
