@@ -64,6 +64,7 @@ ohos_executable("e2fsck") {
   ]
 
   install_enable = true
+  subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_images = [
     "system",

@@ -31,6 +31,7 @@ ohos_shared_library("libext2_misc") {
     "//third_party/e2fsprogs/lib/support:libext2_quota",
   ]
   install_enable = true
+  subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_images = [
     "system",
@@ -72,6 +73,7 @@ ohos_executable("mke2fs") {
   ]
 
   install_enable = true
+  subsystem_name = "distributeddatamgr"
   part_name = "e2fsprogs"
   install_images = [
     "system",
