@@ -64,7 +64,7 @@ ohos_executable("e2fsdroid") {
 
   install_enable = true
   subsystem_name = "distributeddatamgr"
-  part_name = "e2fsprogs"
+  part_name = "distributedfilejs"
   install_images = [
     "system",
     "updater",
