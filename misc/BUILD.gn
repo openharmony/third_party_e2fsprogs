@@ -32,7 +32,7 @@ ohos_shared_library("libext2_misc") {
   ]
   install_enable = true
   subsystem_name = "distributeddatamgr"
-  part_name = "e2fsprogs"
+  part_name = "distributedfilejs"
   install_images = [
     "system",
     "updater",
@@ -74,7 +74,7 @@ ohos_executable("mke2fs") {
 
   install_enable = true
   subsystem_name = "distributeddatamgr"
-  part_name = "e2fsprogs"
+  part_name = "distributedfilejs"
   install_images = [
     "system",
     "updater",
