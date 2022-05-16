@@ -40,7 +40,7 @@ ohos_shared_library("libext2_com_err") {
   ]
   install_enable = true
   subsystem_name = "distributeddatamgr"
-  part_name = "e2fsprogs"
+  part_name = "distributedfilejs"
   install_images = [
     "system",
     "updater",
