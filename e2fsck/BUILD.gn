@@ -24,6 +24,7 @@ ohos_executable("e2fsck") {
     "e2fsck.c",
     "ea_refcount.c",
     "ehandler.c",
+    "encrypted_files.c",
     "extents.c",
     "journal.c",
     "logfile.c",

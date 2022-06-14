@@ -50,9 +50,11 @@ static inline errcode_t android_configure_fs(ext2_filsys fs,
 #   include <selinux/android.h>
 #  include <private/android_filesystem_config.h>
 #  include <private/canned_fs_config.h>
+#  include <private/fs_config.h>
 # else /* !__ANDROID__ */
 #include "dac_config.h"
 #  endif
+
 errcode_t android_configure_fs(ext2_filsys fs, char *src_dir,
 			       char *target_out,
 			       char *mountpoint,

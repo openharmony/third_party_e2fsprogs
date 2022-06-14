@@ -234,7 +234,8 @@ out:
 /* Helper functions for computing quota in memory.                */
 /******************************************************************/
 
-static int dict_uint_cmp(const void *a, const void *b)
+static int dict_uint_cmp(const void *cmp_ctx EXT2FS_ATTR((unused)),
+			 const void *a, const void *b)
 {
 	unsigned int	c, d;
 
@@ -432,7 +433,8 @@ void quota_data_sub(quota_ctx_t qctx, struct ext2_inode_large *inode,
 		dict = qctx->quota_dict[qtype];
 		if (dict) {
 			dq = get_dq(dict, get_qid(inode, qtype));
-			dq->dq_dqb.dqb_curspace -= space;
+			if (dq)
+				dq->dq_dqb.dqb_curspace -= space;
 		}
 	}
 }
@@ -459,7 +461,8 @@ void quota_data_inodes(quota_ctx_t qctx, struct ext2_inode_large *inode,
 		dict = qctx->quota_dict[qtype];
 		if (dict) {
 			dq = get_dq(dict, get_qid(inode, qtype));
-			dq->dq_dqb.dqb_curinodes += adjust;
+			if (dq)
+				dq->dq_dqb.dqb_curinodes += adjust;
 		}
 	}
 }
@@ -500,9 +503,11 @@ errcode_t quota_compute_usage(quota_ctx_t qctx)
 		}
 		if (ino == 0)
 			break;
-		if (inode->i_links_count &&
-		    (ino == EXT2_ROOT_INO ||
-		     ino >= EXT2_FIRST_INODE(fs->super))) {
+		if (!inode->i_links_count)
+			continue;
+		if (ino == EXT2_ROOT_INO ||
+		    (ino >= EXT2_FIRST_INODE(fs->super) &&
+		     ino != quota_type2inum(PRJQUOTA, fs->super))) {
 			space = ext2fs_get_stat_i_blocks(fs,
 						EXT2_INODE(inode)) << 9;
 			quota_data_add(qctx, inode, ino, space);
@@ -530,6 +535,8 @@ static int scan_dquots_callback(struct dquot *dquot, void *cb_data)
 	struct dquot *dq;
 
 	dq = get_dq(quota_dict, dquot->dq_id);
+	if (!dq)
+		return -1;
 	dq->dq_id = dquot->dq_id;
 	dq->dq_flags |= DQF_SEEN;
 
