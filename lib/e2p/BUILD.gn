@@ -24,6 +24,7 @@ config("libext2-headers") {
 ohos_shared_library("libext2_e2p") {
   sources = [
     "encoding.c",
+    "errcode.c",
     "feature.c",
     "fgetflags.c",
     "fgetproject.c",

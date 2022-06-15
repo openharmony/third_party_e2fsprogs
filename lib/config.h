@@ -13,6 +13,9 @@
 /* Define to 1 if debugging ext3/4 journal code */
 /* #undef CONFIG_JBD_DEBUG */
 
+/* The internal ext2_filsys data structure appears to be corrupted */
+#define	EXT2_FILSYS_CORRUPTED 1
+
 /* Define to 1 to enable mmp support */
 #define CONFIG_MMP 1
 
