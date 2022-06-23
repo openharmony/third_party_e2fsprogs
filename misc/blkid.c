@@ -38,6 +38,8 @@ extern int optind;
 
 #include "ext2fs/ext2fs.h"
 #include "blkid/blkid.h"
+#include "blkidP.h"
+#include "iconv.h"
 
 static const char *progname = "blkid";
 
@@ -229,6 +231,69 @@ static void pretty_print_dev(blkid_dev dev)
 	pretty_print_line(devname, fs_type, label, mtpt, uuid);
 }
 
+static int is_str_utf8(const char* str)
+{
+	unsigned int nBytes = 0;
+	unsigned char chr = *str;
+	int bAllAscii = 1;
+
+	for (unsigned int i = 0; str[i] != '\0'; ++i) {
+		chr = *(str + i);
+		// Determine whether it is ASCII
+		if (nBytes == 0 && (chr & 0x80) != 0) {
+			bAllAscii = 0;
+		}
+		if (nBytes == 0) {
+			//if not ASCII, count the bytes
+			if (chr >= 0xFC && chr <= 0xFD) {
+				nBytes = 5;
+			} else if (chr >= 0xF8) {
+				nBytes = 4;
+			} else if (chr >= 0xF0) {
+				nBytes = 3;
+			} else if (chr >= 0xE0) {
+				nBytes = 2;
+			} else if (chr >= 0xC0) {
+				nBytes = 1;
+			} else if (chr >= 0x80) {
+				return 0;
+			}
+			continue;;
+		}
+		if ((chr & 0xC0) != 0x80) {
+			return 0;
+		}
+		nBytes--;
+	}
+
+
+	// violate UTF8 rule 
+	if (nBytes != 0) {
+		return 0;
+	}
+
+	if (bAllAscii){
+		return 1;
+	}
+
+	return 1;
+}
+
+
+static int code_convert(char *from_charset, char *to_charset,char *inbuf, size_t inlen, char *outbuf, size_t outlen)
+{
+	iconv_t cd;
+	char **pin = &inbuf;
+	char **pout = &outbuf;
+
+	cd = iconv_open(to_charset, from_charset);
+	if (cd == 0) return -1;
+	memset(outbuf, 0, outlen);
+	if (iconv(cd, pin, &inlen, pout, &outlen) == (size_t)-1) return -1;
+	iconv_close(cd); 
+	return 0;
+}
+
 static void print_tags(blkid_dev dev, char *show[], int numtag, int output)
 {
 	blkid_tag_iterate	iter;
@@ -258,13 +323,21 @@ static void print_tags(blkid_dev dev, char *show[], int numtag, int output)
 				continue;
 		}
 		if (output & OUTPUT_VALUE_ONLY) {
-			fputs(value, stdout);
-			fputc('\n', stdout);
+			if (!strncmp(type, "LABEL", 5) && !strncmp(dev->bid_type, "vfat", 4) && !is_str_utf8(value)) {
+				char outbuf[255];
+				code_convert("gbk","utf-8", (char *)value, strlen(value), outbuf, 255);
+				fputs(outbuf, stdout);
+				fputc('\n', stdout);
+			} else {
+				fputs(value, stdout);
+				fputc('\n', stdout);
+			}
 		} else {
 			if (first) {
 				printf("%s: ", blkid_dev_devname(dev));
 				first = 0;
 			}
+
 			fputs(type, stdout);
 			fputs("=\"", stdout);
 			safe_print(value, -1);
