@@ -40,6 +40,7 @@ extern int optind;
 #include "blkid/blkid.h"
 #include "blkidP.h"
 #include "iconv.h"
+#include "securec.h"
 
 static const char *progname = "blkid";
 
@@ -239,41 +240,26 @@ static int is_str_utf8(const char* str)
 
 	for (unsigned int i = 0; str[i] != '\0'; ++i) {
 		chr = *(str + i);
-		// Determine whether it is ASCII
-		if (nBytes == 0 && (chr & 0x80) != 0) {
+		if ((chr & 0x80) != 0)
 			bAllAscii = 0;
-		}
-		if (nBytes == 0) {
-			//if not ASCII, count the bytes
-			if (chr >= 0xFC && chr <= 0xFD) {
-				nBytes = 5;
-			} else if (chr >= 0xF8) {
-				nBytes = 4;
-			} else if (chr >= 0xF0) {
-				nBytes = 3;
-			} else if (chr >= 0xE0) {
-				nBytes = 2;
-			} else if (chr >= 0xC0) {
-				nBytes = 1;
-			} else if (chr >= 0x80) {
+		if(nBytes == 0 && ((chr & 0x80) != 0)) {
+			while((chr & 0x80) != 0) {
+				chr <<= 1;
+				nBytes ++;
+			}
+			if((nBytes < 2) || (nBytes > 6)) {
 				return 0;
 			}
-			continue;;
+			nBytes --;
+		} else if (nBytes != 0) {
+			if((chr & 0xc0) != 0x80) {
+				return 0;
+			}
+			nBytes --;
 		}
-		if ((chr & 0xC0) != 0x80) {
-			return 0;
-		}
-		nBytes--;
 	}
-
-
-	// violate UTF8 rule 
-	if (nBytes != 0) {
+	if (nBytes && !bAllAscii)  {
 		return 0;
-	}
-
-	if (bAllAscii){
-		return 1;
 	}
 
 	return 1;
@@ -288,7 +274,7 @@ static int code_convert(char *from_charset, char *to_charset,char *inbuf, size_t
 
 	cd = iconv_open(to_charset, from_charset);
 	if (cd == 0) return -1;
-	memset(outbuf, 0, outlen);
+	if (memset_s(outbuf, outlen, 0, outlen) != EOK) return -1;
 	if (iconv(cd, pin, &inlen, pout, &outlen) == (size_t)-1) return -1;
 	iconv_close(cd); 
 	return 0;
@@ -325,19 +311,21 @@ static void print_tags(blkid_dev dev, char *show[], int numtag, int output)
 		if (output & OUTPUT_VALUE_ONLY) {
 			if (!strncmp(type, "LABEL", 5) && !strncmp(dev->bid_type, "vfat", 4) && !is_str_utf8(value)) {
 				char outbuf[255];
-				code_convert("gbk","utf-8", (char *)value, strlen(value), outbuf, 255);
-				fputs(outbuf, stdout);
-				fputc('\n', stdout);
+				int res = code_convert("gbk","utf-8", (char *)value, strlen(value), outbuf, 255);
+				if (!res) {
+					fputs(outbuf, stdout);
+				} else {
+					fputs(value, stdout);
+				}
 			} else {
 				fputs(value, stdout);
-				fputc('\n', stdout);
 			}
+			fputc('\n', stdout);
 		} else {
 			if (first) {
 				printf("%s: ", blkid_dev_devname(dev));
 				first = 0;
 			}
-
 			fputs(type, stdout);
 			fputs("=\"", stdout);
 			safe_print(value, -1);
