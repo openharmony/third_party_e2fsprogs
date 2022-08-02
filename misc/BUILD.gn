@@ -98,8 +98,6 @@ ohos_executable("blkid") {
 
   deps = [
     "//third_party/e2fsprogs/lib/blkid:libext2_blkid",
-    "//third_party/e2fsprogs/lib/e2p:libext2_e2p",
-    "//third_party/e2fsprogs/lib/et:libext2_com_err",
     "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
   ]
 
