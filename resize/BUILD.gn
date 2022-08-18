@@ -48,8 +48,8 @@ ohos_executable("resize2fs") {
 
   ldflags = [ "-stdlib=libc++_static" ]
   install_enable = true
-  subsystem_name = "distributeddatamgr"
-  part_name = "distributedfilejs"
+  subsystem_name = "thirdparty"
+  part_name = "e2fsprogs"
   install_images = [
     "system",
     "updater",

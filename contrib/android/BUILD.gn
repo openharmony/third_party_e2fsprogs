@@ -21,7 +21,7 @@ ohos_static_library("libdacconfig") {
   sources = [ "dac_config.cpp" ]
 
   part_name = "e2fsprogs"
-  subsystem_name = "distributeddatamgr"
+  subsystem_name = "thirdparty"
 }
 config("e2fsprogs-defaults") {
   cflags = [
@@ -63,8 +63,8 @@ ohos_executable("e2fsdroid") {
   ]
 
   install_enable = true
-  subsystem_name = "distributeddatamgr"
-  part_name = "distributedfilejs"
+  subsystem_name = "thirdparty"
+  part_name = "e2fsprogs"
   install_images = [
     "system",
     "updater",
