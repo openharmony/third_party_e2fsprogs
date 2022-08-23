@@ -46,8 +46,8 @@ ohos_shared_library("libext2_quota") {
     "//third_party/e2fsprogs/lib/ext2fs:libext2fs",
   ]
   install_enable = true
-  subsystem_name = "distributeddatamgr"
-  part_name = "distributedfilejs"
+  subsystem_name = "thirdparty"
+  part_name = "e2fsprogs"
   install_images = [
     "system",
     "updater",

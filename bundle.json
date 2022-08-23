@@ -14,8 +14,8 @@
         "en": "README"
     },
     "component": {
-        "name": "thirdparty_e2fsprogs",
-        "subsystem": "",
+        "name": "e2fsprogs",
+        "subsystem": "thirdparty",
         "syscap": [],
         "features": [],
         "adapted_system_type": [],
