@@ -17,7 +17,6 @@ group("e2fsprogs") {
   if (target_cpu != "riscv64") {
     deps += [ "//third_party/e2fsprogs/contrib/android:e2fsdroid" ]
   }
-  public_deps = [ "//third_party/boringssl:crypto" ]
 }
 
 group("e2fsprogs_host_toolchain") {
@@ -29,5 +28,4 @@ group("e2fsprogs_host_toolchain") {
     deps +=
         [ "//third_party/e2fsprogs/contrib/android:e2fsdroid($host_toolchain)" ]
   }
-  public_deps = [ "//third_party/boringssl:crypto" ]
 }
