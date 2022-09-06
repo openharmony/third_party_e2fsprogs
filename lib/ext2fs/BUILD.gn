@@ -110,10 +110,7 @@ ohos_shared_library("libext2fs") {
   ]
   configs = [ ":e2fsprogs-defaults" ]
 
-  deps = [
-    "//third_party/e2fsprogs/lib/et:libext2_com_err",
-    "//third_party/e2fsprogs/lib/uuid:libext2_uuid",
-  ]
+  deps = [ "//third_party/e2fsprogs/lib/et:libext2_com_err" ]
 
   cflags = [ "-Wno-unused-parameter" ]
   include_dirs = [
