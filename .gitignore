@@ -13,11 +13,9 @@ Makefile
 *.o
 *.a
 *.orig
-*.patch
 *.pc
 *.rej
 *.swp
-00[0-9][1-9]*.patch
 MCONFIG
 asm_types.h
 config.log
@@ -219,3 +217,4 @@ util/install-symlink
 util/subst
 util/subst.conf
 Meta
+e2fsprogs

@@ -1,0 +1,886 @@
+diff --git a/contrib/android/BUILD.gn b/contrib/android/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..850f8f6e13797f31f469f632b3d8b82e94f5f8c1
+--- /dev/null
++++ b/contrib/android/BUILD.gn
+@@ -0,0 +1,73 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++import("//build/ohos_var.gni")
++import("//developtools/profiler/build/config.gni")
++
++ohos_static_library("libdacconfig") {
++  output_name = "libdacconfig"
++
++  sources = [ "dac_config.cpp" ]
++
++  part_name = "e2fsprogs"
++  subsystem_name = "thirdparty"
++}
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wno-incompatible-pointer-types",
++    "-Wno-tautological-constant-out-of-range-compare",
++  ]
++}
++
++######################################################
++##Build e2fsdroid
++ohos_executable("e2fsdroid") {
++  configs = [ ":e2fsprogs-defaults" ]
++
++  defines = [ "HAVE_SYS_TYPES_H" ]
++  sources = [
++    "base_fs.c",
++    "basefs_allocator.c",
++    "block_list.c",
++    "block_range.c",
++    "e2fsdroid.c",
++    "fsmap.c",
++    "perms.c",
++  ]
++
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
++    "//third_party/e2fsprogs/e2fsprogs/misc",
++    "//third_party/selinux/libselinux/include",
++  ]
++
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/contrib/android:libdacconfig",
++    "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++    "//third_party/e2fsprogs/e2fsprogs/misc:libext2_misc",
++    "//third_party/selinux:libselinux",
++  ]
++
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
++
+diff --git a/e2fsck/BUILD.gn b/e2fsck/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..505f2ab12a13a55d108f36475267a71209e52816
+--- /dev/null
++++ b/e2fsck/BUILD.gn
+@@ -0,0 +1,74 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# This library is free software; you can redistribute it and/or
++# modify it under the terms of the GNU Library General Public License as
++# published by the Free Software Foundation; either version 2 of the
++# License, or (at your option) any later version.
++
++import("//build/ohos.gni")
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wno-pointer-sign",
++    "-Wno-unused-variable",
++    "-Wno-error=format",
++  ]
++}
++
++###################################################
++###Build e2fsck
++ohos_executable("e2fsck") {
++  configs = [ ":e2fsprogs-defaults" ]
++  sources = [
++    "badblocks.c",
++    "dirinfo.c",
++    "dx_dirinfo.c",
++    "e2fsck.c",
++    "ea_refcount.c",
++    "ehandler.c",
++    "encrypted_files.c",
++    "extents.c",
++    "journal.c",
++    "logfile.c",
++    "message.c",
++    "pass1.c",
++    "pass1b.c",
++    "pass2.c",
++    "pass3.c",
++    "pass4.c",
++    "pass5.c",
++    "problem.c",
++    "quota.c",
++    "readahead.c",
++    "recovery.c",
++    "region.c",
++    "rehash.c",
++    "revoke.c",
++    "sigcatcher.c",
++    "super.c",
++    "unix.c",
++    "util.c",
++  ]
++
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
++    "//third_party/mtd-utils/lib",
++  ]
++
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/lib/blkid:libext2_blkid",
++    "//third_party/e2fsprogs/e2fsprogs/lib/e2p:libext2_e2p",
++    "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++    "//third_party/e2fsprogs/e2fsprogs/lib/support:libext2_quota",
++    "//third_party/e2fsprogs/e2fsprogs/lib/uuid:libext2_uuid",
++  ]
++
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
+diff --git a/lib/BUILD.gn b/lib/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..8d10470c3c3cac73ad1f00e5b8a50999dbd98449
+--- /dev/null
++++ b/lib/BUILD.gn
+@@ -0,0 +1,17 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++}
+diff --git a/lib/blkid/BUILD.gn b/lib/blkid/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..f3067b0fdc5c8b388f8dcdfc63f418abf51af358
+--- /dev/null
++++ b/lib/blkid/BUILD.gn
+@@ -0,0 +1,62 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wno-implicit-function-declaration",
++    "-Wno-int-conversion",
++  ]
++  defines = [ "secure_getenv=getenv" ]
++}
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++}
++
++ohos_shared_library("libext2_blkid") {
++  configs = [
++    ":e2fsprogs-defaults",
++    ":libext2-headers",
++  ]
++  sources = [
++    "cache.c",
++    "dev.c",
++    "devname.c",
++    "devno.c",
++    "getsize.c",
++    "llseek.c",
++    "probe.c",
++    "read.c",
++    "resolve.c",
++    "save.c",
++    "tag.c",
++    "version.c",
++  ]
++
++  include_dirs = [ "." ]
++  deps = [ "//third_party/e2fsprogs/e2fsprogs/lib/uuid:libext2_uuid" ]
++  cflags = [
++    "-Wno-error=attributes",
++    "-Wno-error=pointer-sign",
++    "-Wno-unused-parameter",
++    "-fno-strict-aliasing",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
+diff --git a/lib/e2p/BUILD.gn b/lib/e2p/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..941f0c7d6dc59f749fc63be13e4d4fc91c78b0ce
+--- /dev/null
++++ b/lib/e2p/BUILD.gn
+@@ -0,0 +1,69 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wall",
++    "-Werror",
++  ]
++}
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++}
++ohos_shared_library("libext2_e2p") {
++  sources = [
++    "encoding.c",
++    "errcode.c",
++    "feature.c",
++    "fgetflags.c",
++    "fgetproject.c",
++    "fgetversion.c",
++    "fsetflags.c",
++    "fsetproject.c",
++    "fsetversion.c",
++    "getflags.c",
++    "getversion.c",
++    "hashstr.c",
++    "iod.c",
++    "ljs.c",
++    "ls.c",
++    "mntopts.c",
++    "ostype.c",
++    "parse_num.c",
++    "pe.c",
++    "percent.c",
++    "pf.c",
++    "ps.c",
++    "setflags.c",
++    "setversion.c",
++    "uuid.c",
++  ]
++  include_dirs = [ "." ]
++
++  configs = [
++    ":e2fsprogs-defaults",
++    ":libext2-headers",
++  ]
++  cflags = [
++    "-Wno-error=attributes",
++    "-Wno-unused-parameter",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
+diff --git a/lib/et/BUILD.gn b/lib/et/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..2877502e377b9ecf5f709f89dac3d42ccce6fbd4
+--- /dev/null
++++ b/lib/et/BUILD.gn
+@@ -0,0 +1,48 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wno-int-conversion",
++    "-Wno-implicit-function-declaration",
++  ]
++  defines = [ "secure_getenv=getenv" ]
++}
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++}
++
++ohos_shared_library("libext2_com_err") {
++  sources = [
++    "com_err.c",
++    "com_right.c",
++    "error_message.c",
++    "et_name.c",
++    "init_et.c",
++  ]
++
++  include_dirs = [ "." ]
++  configs = [
++    ":e2fsprogs-defaults",
++    ":libext2-headers",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
+diff --git a/lib/ext2fs/BUILD.gn b/lib/ext2fs/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..dfc180387561fa1cbece9020ca26c5483f849b18
+--- /dev/null
++++ b/lib/ext2fs/BUILD.gn
+@@ -0,0 +1,127 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wno-sign-compare",
++    "-Wno-pointer-sign",
++    "-Wno-implicit-function-declaration",
++    "-Wno-int-conversion",
++  ]
++  defines = [ "secure_getenv=getenv" ]
++}
++
++ohos_shared_library("libext2fs") {
++  sources = [
++    "alloc.c",
++    "alloc_sb.c",
++    "alloc_stats.c",
++    "alloc_tables.c",
++    "atexit.c",
++    "badblocks.c",
++    "bb_inode.c",
++    "bitmaps.c",
++    "bitops.c",
++    "blkmap64_ba.c",
++    "blkmap64_rb.c",
++    "blknum.c",
++    "block.c",
++    "bmap.c",
++    "check_desc.c",
++    "closefs.c",
++    "crc16.c",
++    "crc32c.c",
++    "csum.c",
++    "dblist.c",
++    "dblist_dir.c",
++    "digest_encode.c",
++    "dir_iterate.c",
++    "dirblock.c",
++    "dirhash.c",
++    "dupfs.c",
++    "expanddir.c",
++    "ext2_err.c",
++    "ext_attr.c",
++    "extent.c",
++    "fallocate.c",
++    "fileio.c",
++    "finddev.c",
++    "flushb.c",
++    "freefs.c",
++    "gen_bitmap.c",
++    "gen_bitmap64.c",
++    "get_num_dirs.c",
++    "get_pathname.c",
++    "getsectsize.c",
++    "getsize.c",
++    "hashmap.c",
++    "i_block.c",
++    "icount.c",
++    "imager.c",
++    "ind_block.c",
++    "initialize.c",
++    "inline.c",
++    "inline_data.c",
++    "inode.c",
++    "io_manager.c",
++    "ismounted.c",
++    "link.c",
++    "llseek.c",
++    "lookup.c",
++    "mkdir.c",
++    "mkjournal.c",
++    "mmp.c",
++    "namei.c",
++    "native.c",
++    "newdir.c",
++    "nls_utf8.c",
++    "openfs.c",
++    "progress.c",
++    "punch.c",
++    "qcow2.c",
++    "rbtree.c",
++    "read_bb.c",
++    "read_bb_file.c",
++    "res_gdt.c",
++    "rw_bitmaps.c",
++    "sha256.c",
++    "sha512.c",
++    "sparse_io.c",
++    "swapfs.c",
++    "symlink.c",
++    "test_io.c",
++    "undo_io.c",
++    "unix_io.c",
++    "unlink.c",
++    "valid_blk.c",
++    "version.c",
++  ]
++  configs = [ ":e2fsprogs-defaults" ]
++
++  deps = [ "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err" ]
++
++  cflags = [ "-Wno-unused-parameter" ]
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
+diff --git a/lib/ss/BUILD.gn b/lib/ss/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..1ddf4b0b6c7a4e5baf0e28d4f3b22fa470630099
+--- /dev/null
++++ b/lib/ss/BUILD.gn
+@@ -0,0 +1,43 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++  defines = [ "secure_getenv=getenv" ]
++}
++
++ohos_static_library("libext2_ss") {
++  sources = [
++    "data.c",
++    "error.c",
++    "execute_cmd.c",
++    "get_readline.c",
++    "help.c",
++    "invocation.c",
++    "list_rqs.c",
++    "listen.c",
++    "pager.c",
++    "parse.c",
++    "prompt.c",
++    "request_tbl.c",
++    "requests.c",
++    "ss_err.c",
++    "std_rqs.c",
++  ]
++
++  include_dirs = [ "." ]
++  configs = [ ":libext2-headers" ]
++
++  deps = [ "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err" ]
++}
+diff --git a/lib/support/BUILD.gn b/lib/support/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..e94aa0c643864c91fd554724b70317b0e922d2f3
+--- /dev/null
++++ b/lib/support/BUILD.gn
+@@ -0,0 +1,78 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wall",
++    "-Werror",
++  ]
++}
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++}
++
++ohos_shared_library("libext2_quota") {
++  sources = [
++    "dict.c",
++    "mkquota.c",
++    "parse_qtype.c",
++    "plausible.c",
++    "prof_err.c",
++    "profile.c",
++    "profile_helpers.c",
++    "quotaio.c",
++    "quotaio_tree.c",
++    "quotaio_v2.c",
++  ]
++  include_dirs = [ "." ]
++  configs = [
++    ":e2fsprogs-defaults",
++    ":libext2-headers",
++  ]
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/lib/blkid:libext2_blkid",
++    "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
++
++ohos_static_library("libext2_profile") {
++  sources = [
++    "prof_err.c",
++    "profile.c",
++  ]
++  include_dirs = [ "." ]
++  configs = [
++    ":libext2-headers",
++    ":e2fsprogs-defaults",
++  ]
++
++  deps = [ "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err" ]
++}
++
++ohos_static_library("libext2_support") {
++  sources = [ "cstring.c" ]
++  include_dirs = [ "." ]
++  configs = [
++    ":e2fsprogs-defaults",
++    ":libext2-headers",
++  ]
++}
+diff --git a/lib/uuid/BUILD.gn b/lib/uuid/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..27b7470d663b78cd939ffa6d17719e12b0522661
+--- /dev/null
++++ b/lib/uuid/BUILD.gn
+@@ -0,0 +1,53 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("e2fsprogs-defaults") {
++  cflags = [
++    "-Wall",
++    "-Werror",
++  ]
++}
++config("libext2-headers") {
++  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
++}
++ohos_shared_library("libext2_uuid") {
++  sources = [
++    "clear.c",
++    "compare.c",
++    "copy.c",
++    "gen_uuid.c",
++    "isnull.c",
++    "pack.c",
++    "parse.c",
++    "unpack.c",
++    "unparse.c",
++    "uuid_time.c",
++  ]
++  include_dirs = [ "." ]
++  cflags = [
++    "-Wno-unused-function",
++    "-Wno-unused-parameter",
++  ]
++  configs = [
++    ":e2fsprogs-defaults",
++    ":libext2-headers",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
+diff --git a/misc/BUILD.gn b/misc/BUILD.gn
+new file mode 100644
+index 0000000000000000000000000000000000000000..2869c9973bf3b9463fddbe82b455e9a1ef88a1ed
+--- /dev/null
++++ b/misc/BUILD.gn
+@@ -0,0 +1,111 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("e2fsprogs-defaults") {
++  cflags = [ "-Wno-pointer-sign" ]
++}
++
++ohos_shared_library("libext2_misc") {
++  configs = [ ":e2fsprogs-defaults" ]
++  sources = [ "create_inode.c" ]
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++  ]
++  cflags = [ "-Wno-error=format-extra-args" ]
++
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++  ]
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
++
++###################################################
++###Build mke2fs
++ohos_executable("mke2fs") {
++  configs = [ ":e2fsprogs-defaults" ]
++  sources = [
++    "default_profile.c",
++    "mk_hugefiles.c",
++    "mke2fs.c",
++    "util.c",
++  ]
++
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/e2fsck",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
++  ]
++  cflags = [
++    "-Wno-error=format",
++    "-Wno-error=type-limits",
++    "-Wno-format-extra-args",
++  ]
++
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/lib/blkid:libext2_blkid",
++    "//third_party/e2fsprogs/e2fsprogs/lib/e2p:libext2_e2p",
++    "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++    "//third_party/e2fsprogs/e2fsprogs/lib/support:libext2_quota",
++    "//third_party/e2fsprogs/e2fsprogs/lib/uuid:libext2_uuid",
++    "//third_party/e2fsprogs/e2fsprogs/misc:libext2_misc",
++  ]
++
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
++
++ohos_executable("blkid") {
++  configs = [ ":e2fsprogs-defaults" ]
++  sources = [ "blkid.c" ]
++
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++    "//third_party/e2fsprogs/e2fsprogs/lib/blkid",
++  ]
++  cflags = [
++    "-Wno-error=format",
++    "-Wno-error=type-limits",
++    "-Wno-format-extra-args",
++  ]
++
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/lib/blkid:libext2_blkid",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++  ]
++
++  install_enable = true
++  subsystem_name = "filemanagement"
++  part_name = "storage_service"
++  install_images = [
++    "system",
++    "updater",
++  ]
++  external_deps = [ "c_utils:utils" ]
++}
+diff --git a/resize/BUILD.gn b/resize/BUILD.gn
+new file mode 100755
+index 0000000000000000000000000000000000000000..845206cafedb5d7a8f92a2155cb73cbc77cce739
+--- /dev/null
++++ b/resize/BUILD.gn
+@@ -0,0 +1,59 @@
++# Copyright (c) 2021 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++# http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++import("//build/ohos.gni")
++config("e2fsprogs-defaults") {
++  cflags = [ "-Wno-pointer-sign" ]
++}
++
++##Build resize2fs
++ohos_executable("resize2fs") {
++  configs = [ ":e2fsprogs-defaults" ]
++  sources = [
++    "extent.c",
++    "main.c",
++    "online.c",
++    "resize2fs.c",
++    "resource_track.c",
++    "sim_progress.c",
++  ]
++
++  include_dirs = [
++    ".",
++    "//third_party/e2fsprogs/e2fsprogs/e2fsck",
++    "//third_party/e2fsprogs/e2fsprogs/lib",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
++  ]
++  cflags = [
++    "-Wno-error=format",
++    "-Wno-error=type-limits",
++    "-Wno-format-extra-args",
++  ]
++
++  deps = [
++    "//third_party/e2fsprogs/e2fsprogs/lib/e2p:libext2_e2p",
++    "//third_party/e2fsprogs/e2fsprogs/lib/et:libext2_com_err",
++    "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs:libext2fs",
++  ]
++
++  if (is_ohos) {
++    ldflags = [ "-stdlib=libc++_static" ]
++  }
++  install_enable = true
++  subsystem_name = "thirdparty"
++  part_name = "e2fsprogs"
++  install_images = [
++    "system",
++    "updater",
++  ]
++}
