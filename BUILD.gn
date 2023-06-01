@@ -1,8 +1,5 @@
 import("//build/ohos.gni")
-
-e2fsprogs_path = rebase_path("//third_party/e2fsprogs")
-exec_script("install.sh", [ "$e2fsprogs_path" ])
-
+import("e2fsprogs.gni")
 group("e2fsprogs") {
   deps = [
     "//third_party/e2fsprogs/e2fsprogs/e2fsck:e2fsck",
