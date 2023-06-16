@@ -193,7 +193,7 @@ index 00000000..422e0d52
 +
 +            int gid = 0;
 +            if (isdigit(values[DAC_GID_IDX][0])) {
-+                uid = stoi(values[DAC_GID_IDX]);
++                gid = stoi(values[DAC_GID_IDX]);
 +            }
 +
 +            uint64_t cap = GetCap(values[DAC_CAP_IDX]);
