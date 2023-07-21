@@ -9,7 +9,7 @@
 set -e
 cd $1
 if [ -d "e2fsprogs" ];then
-    rm -rf e2fsprogs
+    exit 0
 fi
 tar xvf e2fsprogs-1.46.4.tar.xz
 cd $1/e2fsprogs
