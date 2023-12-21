@@ -17,9 +17,7 @@ group("e2fsprogs") {
     ":mke2fs",
     ":resize2fs",
   ]
-  if (target_cpu != "riscv64") {
-    deps += [ ":e2fsdroid" ]
-  }
+  deps += [ ":e2fsdroid" ]
 }
 
 group("e2fsprogs_host_toolchain") {
@@ -27,9 +25,7 @@ group("e2fsprogs_host_toolchain") {
     ":e2fsck($host_toolchain)",
     ":mke2fs($host_toolchain)",
   ]
-  if (target_cpu != "riscv64") {
-    deps += [ ":e2fsdroid($host_toolchain)" ]
-  }
+  deps += [ ":e2fsdroid($host_toolchain)" ]
 }
 
 ohos_static_library("libdacconfig") {
