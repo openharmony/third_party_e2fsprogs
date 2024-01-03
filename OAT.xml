@@ -29,16 +29,29 @@
                 <policyitem type="compatibility" name="BSDStyleLicense|LGPLStyleLicense" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
                 <policyitem type="compatibility" name="InvalidLicense" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
                 <policyitem type="compatibility" name="GPL-2.0-or-later" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
+                <policyitem type="compatibility" name="LGPL-2.1" path=".*" desc="Compile tool not runs target, running on host build environment only."/>
                 <policyitem type="compatibility" name="Latex2e" path=".*" desc="It's not a license, OAT tools check error."/>
             </policy>
         </policylist>
-        <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file polices" >
-            <filteritem type="filename" name="*.gmo|*.bz2|*.gz|*.po|*.so|*.xz" desc="original files"/>
-            <filteritem type="filepath" name="prebuilt/target/bin/.*" desc="original bins"/>
-            <filteritem type="filepath" name="prebuilt/target/lib/.*" desc="original bins"/>
-            <filteritem type="filepath" name="prebuilt/host/bin/.*" desc="original bins"/>
-            <filteritem type="filepath" name="tests/.*" desc="original bins"/>
-            <filteritem type="filepath" name="./.*" desc="original bins"/>
-        </filefilter>
+        <filefilterlist>
+            <filefilterlist>
+            <filefilter name="defaultFilter" desc="Files not to check">
+                <filteritem type="filename" name="*.gmo|*.bz2|*.gz|*.po|*.so|*.xz" desc="original files"/>
+                <filteritem type="filename" name="e2fsprogs.spec"/>
+                <filteritem type="filename" name="install.sh"/>
+                <filteritem type="filepath" name="prebuilt/target/bin/.*" desc="original bins"/>
+                <filteritem type="filepath" name="prebuilt/target/lib/.*" desc="original bins"/>
+                <filteritem type="filepath" name="prebuilt/host/bin/.*" desc="original bins"/>
+                <filteritem type="filepath" name="tests/.*" desc="original bins"/>
+                <filteritem type="filepath" name="./.*" desc="original bins"/>
+            </filefilter>
+            <filefilter name="binartFileTypePolicyFilter" desc="Filters for binary file polices">
+                <filteritem type="filepath" name="dir name underproject/.*" desc="original bins"/>
+                <filteritem type="filepath" name="prebuilt/target/lib/.*" desc="original bins"/>
+                <filteritem type="filepath" name="prebuilt/host/bin/.*" desc="original bins"/>
+                <filteritem type="filepath" name="./.*" desc="original bins"/>
+            </filefilter>
+            </filefilterlist>
+        </filefilterlist>
     </oatconfig>
 </configuration>

@@ -1,0 +1,35 @@
+From 3d967e53033c85ad5d3af1a42efb2c4f7501c356 Mon Sep 17 00:00:00 2001
+From: lijinlin3@huawei.com
+Date: Fri, 16 Sep 2022 18:15:02 +0200
+Subject: [PATCH] tune2fs: exit directly when fs freed in ext2fs_run_ext3_journal
+
+In ext2fs_run_ext3_journal(), fs will be free and reallocate. But
+reallocating by ext2fs_open() may fail in some cases, such as device
+being offline at the same time. In these cases, goto closefs will
+cause segfault, fix it by exiting directly.
+
+Signed-off-by: Li Jinlin <lijinlin3@huawei.com>
+---
+ misc/tune2fs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/misc/tune2fs.c b/misc/tune2fs.c
+index 088f87e5..ee57dc7c 100644
+--- a/misc/tune2fs.c
++++ b/misc/tune2fs.c
+@@ -3344,8 +3344,11 @@ _("Warning: The journal is dirty. You may wish to replay the journal like:\n\n"
+ 			com_err("tune2fs", retval,
+ 				"while recovering journal.\n");
+ 			printf(_("Please run e2fsck -fy %s.\n"), argv[1]);
+-			rc = 1;
+-			goto closefs;
++			if (fs) {
++				rc = 1;
++				goto closefs;
++			}
++			exit(1);
+ 		}
+ 		sb = fs->super;
+ 	}
+-- 
+2.23.0
