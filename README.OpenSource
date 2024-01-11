@@ -3,9 +3,9 @@
         "Name"                  : "openEuler:e2fsprogs",
         "License"               : "LGPL V2.0, BSD 3-Clause License, GPL V2.0, MIT License",
         "License File"          : "e2fsprogs/NOTICE",
-        "Version Number"        : "1.46.4-7.oe2203",
+        "Version Number"        : "1.46.4-17.oe2203sp1",
         "Owner"                 : "liuzhiqiang26@huawei.com",
-        "Upstream URL"          : "https://repo.openeuler.org/openEuler-22.03-LTS/source/Packages/e2fsprogs-1.46.4-7.oe2203.src.rpm",
+        "Upstream URL"          : "https://repo.openeuler.org/openEuler-22.03-LTS-SP1/source/Packages/e2fsprogs-1.46.4-17.oe2203sp1.src.rpm",
         "Description"           : "The E2fsprogs package contains the utilities for handling the ext2 file system. It also supports the ext3 and ext4 journaling file systems"
     }
 ]

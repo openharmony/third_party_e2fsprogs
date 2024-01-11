@@ -1,10 +1,11 @@
 Name:           e2fsprogs
 Version:        1.46.4
-Release:        7
+Release:        17
 Summary:        Second extended file system management tools
 License:        GPLv2+ and LGPLv2 and MIT
 URL:            http://e2fsprogs.sourceforge.net/
 Source0:        https://www.kernel.org/pub/linux/kernel/people/tytso/%{name}/v%{version}/%{name}-%{version}.tar.xz
+Source1:        ext2_types-wrapper.h
 
 Patch1:		0001-e2fsprogs-set-hugefile-from-4T-to-1T-in-hugefile-tes.patch
 Patch2:		0002-libss-add-newer-libreadline.so.8-to-dlopen-path.patch
@@ -17,7 +18,17 @@ Patch8:		0008-e2fsck-add-env-param-E2FS_UNRELIABLE_IO-to-fi.patch
 Patch9:		0009-e2mmpstatus.8.in-detele-filesystem-can-be-UUID-or-LA.patch		
 Patch10:	0010-tests-update-expect-file-for-u_direct_io.patch
 Patch11:	0011-libext2fs-don-t-old-the-CACHE_MTX-while-doing-I-O.patch
-Patch12:	0012-tests-skip-m_rootdir_acl-if-selinux-is-not-disabled.patch
+Patch12:	0012-tests-fix-ACL-printing-tests.patch
+Patch13:	0013-e2fsck-do-not-clean-up-file-acl-if-the-inode-is-trun.patch
+Patch14:	0014-e2fsck-handle-level-is-overflow-in-ext2fs_extent_get.patch
+Patch15:	0015-libext2fs-add-sanity-check-to-extent-manipulation.patch
+Patch16:        0016-e2fsprogs-add-sw64.patch
+Patch17:	0017-tune2fs-do-not-change-j_tail_sequence-in-journal-sup.patch
+Patch18:	0018-debugfs-teach-logdump-the-n-num_trans-option.patch
+Patch19:	0019-tune2fs-fix-tune2fs-segfault-when-ext2fs_run_ext3_jo.patch
+Patch20:	0020-tune2fs-tune2fs_main-should-return-rc-when-some-erro.patch
+Patch21:	0021-tune2fs-exit-directly-when-fs-freed-in-ext2fs_run_ext3_journal.patch
+Patch22:	0022-unix_io.c-fix-deadlock-problem-in-unix_write_blk64.patch
 
 
 BuildRequires:  gcc pkgconfig texinfo
@@ -80,10 +91,27 @@ make install install-libs DESTDIR=%{buildroot} INSTALL="%{__install} -p" \
     root_sbindir=%{_sbindir} root_libdir=%{_libdir}
 chmod +w %{buildroot}%{_libdir}/*.a
 
+# Replace arch-dependent header file with arch-independent stub (when needed).
+#%multilib_fix_c_header --file %{_includedir}/ext2fs/ext2_types.h
+# ugly hack to allow parallel install of 32-bit and 64-bit -devel packages:
+%define multilib_arches %{ix86} x86_64
+
+%ifarch %{multilib_arches}
+mv -f %{buildroot}%{_includedir}/ext2fs/ext2_types.h \
+      %{buildroot}%{_includedir}/ext2fs/ext2_types-%{_arch}.h
+
+install -p -m 644 %{SOURCE1} %{buildroot}%{_includedir}/ext2fs/ext2_types.h
+
+%endif
+
 %find_lang %{name}
 
 rm -f %{buildroot}/etc/cron.d/e2scrub_all
 rm -f %{buildroot}%{_libdir}/e2fsprogs/e2scrub_all_cron
+
+%ifarch i686
+rm -rf %{buildroot}%{_unitdir}/e2scrub*
+%endif
 
 %check
 make fullcheck
@@ -116,7 +144,9 @@ exit 0
 %{_libdir}/libss.so.*
 %{_sbindir}/*
 %{_udevrulesdir}/*.rules
+%ifnarch i686
 %{_unitdir}/e2scrub*
+%endif
 
 %files devel
 %{_bindir}/compile_et
@@ -140,13 +170,43 @@ exit 0
 %{_mandir}/man8/*
 
 %changelog
-* Thu Feb 17 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-7
+* Thu Dec 1 2022 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1.46.4-17
+- fix deadlock problem in unix_write_blk64
+
+* Fri Oct 14 2022 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1.46.4-16
+- tune2fs: fix segfault problem
+
+* Fri Sep 23 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-15
+- test: fix ACL-printing tests from community
+
+* Sat Aug 20 2022 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1.46.4-14
+- debugfs: teach logdump the -n <num_trans> option
+
+* Fri Aug 12 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-13
+- tune2fs: do not change j_tail_sequence in journal superblock
+
+* Fri Jun 24 2022 wuzx<wuzx1226@qq.com> - 1.46.4-12
+- add sw64 patch
+
+* Tue Jun 21 2022 lihaoxiang <lihaoxiang9@huawei.com> - 1.46.4-11
+- DESC:add wrapper header file for i686 and x86_64 then fix conflicts when intall i686 rpms.
+ 
+* Sat May 28 2022 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1.46.4-10
+- fix CVE-2022-1304
+
+* Fri May 20 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-9
+- e2fsck: handle->level is overflow in ext2fs_extent_get.
+
+* Wed May 18 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-8
+- e2fsck: do not clean up file acl if the inode is truncating type
+
+* Thu Mar 17 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-7
 - tests: skip m_rootdir_acl if selinux is not disabled
 
-* Wed Feb 9 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-6
+* Wed Mar 9 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-6
 - libext2fs: don't old the CACHE_MTX while doing I/O
 
-* Thu Feb 8 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-5
+* Tue Mar 8 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-5
 - tests: update expect file for u_direct_io
 
 * Wed Mar 2 2022 zhanchengbin <zhanchengbin1@huawei.com> - 1.46.4-4
@@ -164,7 +224,7 @@ exit 0
 * Mon Nov 15 2021 zhanchengbin <zhanchengbin1@huawei.com> - 1.45.6-7
 - DESC: integrate community patches.
 
-* Sun Sep 13 2021 lixiaokeng <lixiaokeng@huawei.com> - 1.45.6-6
+* Mon Sep 13 2021 lixiaokeng <lixiaokeng@huawei.com> - 1.45.6-6
 - DESC: add newer libreadline.so.8 to dlopen path
 
 * Fri Aug 20 2021 chenyanpanHW <chenyanpan@huawei.com> - 1.45.6-5
@@ -203,13 +263,13 @@ exit 0
 - SUG:NA
 - DESC:fix local rpmbuild error.
 
-* Mon Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.45.3-1
+* Tue Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.45.3-1
 - Type:cves
 - ID:CVE-2019-5188
 - SUG:restart
 - DESC:backport patch to fix CVE-2019-5188.
 
-* Mon Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.45.3-0
+* Tue Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.45.3-0
 - Type:enhancement
 - ID:NA
 - SUG:NA

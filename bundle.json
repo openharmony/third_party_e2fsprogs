@@ -1,7 +1,7 @@
 {
     "name": "@ohos/e2fsprogs",
     "description": "The E2fsprogs package contains the utilities for handling the ext2 file system. It also supports the ext3 and ext4 journaling file systems",
-    "version": "3.1",
+    "version": "4.1",
     "license": "LGPL V2.0, BSD 3-Clause License, GPL V2.0, MIT License",
     "publishAs": "code-segment",
     "segment": {
