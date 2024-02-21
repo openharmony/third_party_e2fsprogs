@@ -539,6 +539,7 @@ ohos_shared_library("libext2_uuid") {
     ":libext2-headers",
   ]
   install_enable = true
+  innerapi_tags = [ "platformsdk" ]
   subsystem_name = "thirdparty"
   part_name = "e2fsprogs"
   install_images = [
