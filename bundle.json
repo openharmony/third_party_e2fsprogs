@@ -30,8 +30,87 @@
               ]
         },
         "build": {
-            "sub_component": [],
-            "inner_kits": [],
+            "sub_component": [
+                "//third_party/e2fsprogs:blkid",
+                "//third_party/e2fsprogs:e2fsck",
+                "//third_party/e2fsprogs:mke2fs",
+                "//third_party/e2fsprogs:resize2fs",
+                "//third_party/e2fsprogs:e2fsdroid"
+            ],
+            "inner_kits": [
+                {
+                    "name": "//third_party/e2fsprogs:libext2_blkid",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/lib/blkid"
+                        ]
+                    }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libext2_com_err",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/lib/et"
+                        ]
+                    }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libext2_e2p",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/lib/e2p"
+                        ]
+                    }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libext2_misc",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/misc",
+                            "//third_party/e2fsprogs/e2fsprogs/lib"
+                        ]
+                    }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libext2_quota",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/lib/support"
+                        ]
+                    }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libext2_uuid",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/lib/uuid"
+                        ]
+                    }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libext2fs",
+                    "header": {
+                        "header_files": [ 
+                        ],
+                        "header_base": [
+                            "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
+                            "//third_party/e2fsprogs/e2fsprogs/lib"
+                        ]
+                    }
+                }
+            ],
             "test": []
         }
     }
