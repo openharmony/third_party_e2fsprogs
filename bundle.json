@@ -30,13 +30,7 @@
               ]
         },
         "build": {
-            "sub_component": [
-                "//third_party/e2fsprogs:blkid",
-                "//third_party/e2fsprogs:e2fsck",
-                "//third_party/e2fsprogs:mke2fs",
-                "//third_party/e2fsprogs:resize2fs",
-                "//third_party/e2fsprogs:e2fsdroid"
-            ],
+            "sub_component": [],
             "inner_kits": [
                 {
                     "name": "//third_party/e2fsprogs:libext2_blkid",
@@ -109,6 +103,21 @@
                             "//third_party/e2fsprogs/e2fsprogs/lib"
                         ]
                     }
+                },
+                {
+                    "name": "//third_party/e2fsprogs:blkid"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:e2fsck"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:mke2fs"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:resize2fs"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:e2fsdroid"
                 }
             ],
             "test": []
