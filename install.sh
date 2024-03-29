@@ -8,7 +8,7 @@
 
 set -e
 cd $1
-if [ -d "e2fsprogs" ];then
+if [ -d "e2fsprogs" ] || [ -d "e2fsprogs-1.46.4" ];then
     exit 0
 fi
 tar xvf e2fsprogs-1.46.4.tar.xz
