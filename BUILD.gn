@@ -43,6 +43,10 @@ config("e2fsdroid-defaults") {
   ]
 }
 
+config("e2fsdroid_libext2_uuid") {
+  include_dirs = [ "e2fsprogs/lib/uuid/" ]
+}
+
 ######################################################
 ##Build e2fsdroid
 ohos_executable("e2fsdroid") {
@@ -534,6 +538,7 @@ ohos_shared_library("libext2_uuid") {
     "-Wno-unused-function",
     "-Wno-unused-parameter",
   ]
+  public_configs = [ ":e2fsdroid_libext2_uuid" ]
   configs = [
     ":libext2_uuid-defaults",
     ":libext2-headers",
