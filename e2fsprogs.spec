@@ -1,6 +1,6 @@
 Name:           e2fsprogs
 Version:        1.46.4
-Release:        17
+Release:        24
 Summary:        Second extended file system management tools
 License:        GPLv2+ and LGPLv2 and MIT
 URL:            http://e2fsprogs.sourceforge.net/
@@ -29,19 +29,37 @@ Patch19:	0019-tune2fs-fix-tune2fs-segfault-when-ext2fs_run_ext3_jo.patch
 Patch20:	0020-tune2fs-tune2fs_main-should-return-rc-when-some-erro.patch
 Patch21:	0021-tune2fs-exit-directly-when-fs-freed-in-ext2fs_run_ext3_journal.patch
 Patch22:	0022-unix_io.c-fix-deadlock-problem-in-unix_write_blk64.patch
-
+Patch23:	0023-debugfs-fix-repeated-output-problem-with-logdump-O-n.patch
+Patch24:        0024-tune2fs-check-return-value-of-ext2fs_mmp_update2-in-.patch
+Patch25:        0025-mmp-fix-wrong-comparison-in-ext2fs_mmp_stop.patch
+Patch26:        0026-misc-fsck.c-Processes-may-kill-other-processes.patch
+Patch27:        0027-dumpe2fs-resize2fs-avoid-memory-leak-on-error-path.patch
+Patch28:        0028-libext2fs-fix-memory-leak-in-error-path-while-openin.patch
+Patch29:        0029-e2fsck-avoid-theoretical-null-dereference-in-end_pro.patch
+Patch30:        0030-e2fsck-fix-potential-out-of-bounds-read-in-inc_ea_in.patch
+Patch31:        0031-e2fsck-avoid-out-of-bounds-write-for-very-deep-exten.patch
+Patch32:        0032-e2fsck-fix-potential-fencepost-error-in-e2fsck_shoul.patch
+Patch33:        0033-libext2fs-fix-potential-integer-overflow-in-bitmap-a.patch
+Patch34:        0034-tune2fs-fix-an-error-message.patch
+Patch35:        0035-e2fsck-don-t-allow-journal-inode-to-have-encrypt-fla.patch
+Patch36:        0036-lib-ext2fs-fix-unbalanced-mutex-unlock-for-BOUNCE_MT.patch
+Patch37:        0037-libext2fs-fix-ext2fs_compare_generic_bmap-logic.patch
+Patch38:        0038-Quiet-unused-variable-warnings.patch
+Patch39:        0039-ext2fs-Use-64bit-lseek-when-_FILE_OFFSET_BITS-is-64.patch
+Patch40:        0040-e2fsck-fix-bad-htree-checksums-in-preen-mode.patch
+Patch41:	0041-debugfs-Fix-infinite-loop-when-dump-log.patch
 
 BuildRequires:  gcc pkgconfig texinfo
 BuildRequires:  fuse-devel libblkid-devel libuuid-devel
 BuildRequires:  audit
 Recommends:	%{name}-help = %{version}-%{release}
 
-Provides:       e2fsprogs-libs%{?_isa} e2fsprogs-libs
-Obsoletes:      e2fsprogs-libs
-Provides:       libcom_err%{?_isa} libcom_err
-Obsoletes:      libcom_err
-Provides:       libss%{?_isa} libss
-Obsoletes:      libss
+Provides:       e2fsprogs-libs%{?_isa} = %{version}-%{release} e2fsprogs-libs = %{version}-%{release}
+Obsoletes:      e2fsprogs-libs < %{version}
+Provides:       libcom_err%{?_isa} = %{version}-%{release} libcom_err = %{version}-%{release}
+Obsoletes:      libcom_err < %{version}
+Provides:       libss%{?_isa} = %{version}-%{release} libss = %{version}-%{release}
+Obsoletes:      libss < %{version}
 
 %description
 The e2fsprogs package consists of a lot of tools for users to create,
@@ -56,12 +74,12 @@ Requires: gawk
 Requires: pkgconfig
 Requires(post): info
 Requires(preun): info
-Provides: libcom_err-devel%{?_isa} libcom_err-devel
-Obsoletes: libcom_err-devel
-Provides: libss-devel%{?_isa} libss-devel
-Obsoletes: libss-devel
-Provides: e2fsprogs-static{?_isa} e2fsprogs-static
-Obsoletes: e2fsprogs-static
+Provides: libcom_err-devel%{?_isa} = %{version}-%{release} libcom_err-devel = %{version}-%{release}
+Obsoletes: libcom_err-devel < %{version}
+Provides: libss-devel%{?_isa} = %{version}-%{release} libss-devel = %{version}-%{release}
+Obsoletes: libss-devel < %{version}
+Provides: e2fsprogs-static{?_isa} = %{version}-%{release} e2fsprogs-static = %{version}-%{release}
+Obsoletes: e2fsprogs-static < %{version}
 
 %description devel
 This package provides libraries and header files to develop
@@ -130,7 +148,7 @@ fi
 exit 0
 
 %files -f %{name}.lang
-%doc README RELEASE-NOTES
+%doc README
 %license NOTICE
 %config(noreplace) /etc/mke2fs.conf
 %config(noreplace) /etc/e2scrub.conf
@@ -170,6 +188,27 @@ exit 0
 %{_mandir}/man8/*
 
 %changelog
+* Tue Dec 19 2023 haowenchao <haowenchao2@huawei.com> - 1.46.4-24
+- debugfs: Fix infinite loop when dump log
+
+* Thu Nov 09 2023 Xinliang Liu <xinliang.liu@linaro.org> - 1.46.4-23
+- Fix rpmlint Provides/Obsoletes unversioned warnings to fix dnf update
+
+* Mon Oct 30 2023 volcanodragon <linfeilong@huawei.com> - 1.46.4-22
+- e2fsck fix bad htree checksum in preen mode
+
+* Sun Jun 25 2023 suweifeng <suweifeng1@huawei.com> - 1.46.4-21
+- backport patches from upstream
+
+* Fri Jun 9 2023 tangyuchen <tangyuchen5@huawei.com> - 1.46.4-20
+- delete invalid link for ext4
+
+* Thu Mar 30 2023 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1.46.4-19
+- backport one patch to fix: processes may kill other processes in misc/fsck.c
+
+* Thu Feb 9 2023 lihaoxiang <lihaoxiang9@huawei.com> - 1.46.4-18
+- Upstream patches regress for debugfs, tune2fs and mmp.
+
 * Thu Dec 1 2022 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1.46.4-17
 - fix deadlock problem in unix_write_blk64
 
