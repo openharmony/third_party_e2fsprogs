@@ -157,7 +157,6 @@ exit 0
 %{_bindir}/lsattr
 %{_libdir}/e2fsprogs/e2scrub_fail
 %{_libdir}/libe2p.so.*
-%{_libdir}/libext2fs.so.*
 %{_libdir}/libcom_err.so.*
 %{_libdir}/libss.so.*
 %{_sbindir}/*
