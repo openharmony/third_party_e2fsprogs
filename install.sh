@@ -8,12 +8,7 @@
 
 set -e
 cd $1
-if [ -e "lockfile.lock"];then
-    exit 0
-fi
-touch $1/lockfile.lock
 if [ -d "e2fsprogs" ];then
-    rm $1/lockfile.lock
     exit 0
 fi
 tar xvf e2fsprogs.tar.xz
@@ -64,5 +59,4 @@ patch -p1 < $1/1002-add-header-file-to-musl-compile-mk2efs.patch --fuzz=0 --no-b
 patch -p1 < $1/1003-add-dac-config.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $1/1004-modify-code-to-compile.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $1/1005-read-vfat-chinese-label.patch --fuzz=0 --no-backup-if-mismatch
-rm $1/lockfile.lock
 exit 0
