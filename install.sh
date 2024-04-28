@@ -8,6 +8,9 @@
 
 set -e
 cd $1
+touch test.lock
+(
+    flock -x -w 10 200 || exit 1
 if [ -d "e2fsprogs" ];then
     exit 0
 fi
@@ -60,3 +63,4 @@ patch -p1 < $1/1003-add-dac-config.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $1/1004-modify-code-to-compile.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $1/1005-read-vfat-chinese-label.patch --fuzz=0 --no-backup-if-mismatch
 exit 0
+)200>$1/test.lock
