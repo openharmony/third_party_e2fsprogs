@@ -24,10 +24,10 @@
         "rom": "",
         "ram": "",
         "deps": {
-            "components": [],
-            "third_party": [
+            "components": [
                 "selinux"
-              ]
+            ],
+            "third_party": []
         },
         "build": {
             "sub_component": [],
@@ -67,6 +67,9 @@
                 },
                 {
                     "name": "//third_party/e2fsprogs:e2fsdroid"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:libdacconfig"
                 }
             ],
             "test": []
