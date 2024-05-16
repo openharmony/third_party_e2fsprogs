@@ -10,7 +10,7 @@ set -e
 cd $1
 touch test.lock
 (
-    flock -x -w 10 200 || exit 1
+    flock -x 200
 if [ -d "e2fsprogs" ];then
     exit 0
 fi
