@@ -1,6 +1,5 @@
 import("//build/ohos.gni")
 import("//build/ohos_var.gni")
-import("//developtools/profiler/build/config.gni")
 import("e2fsprogs.gni")
 
 group("e2fsprogs") {
@@ -68,7 +67,6 @@ ohos_executable("e2fsdroid") {
     "//third_party/e2fsprogs/e2fsprogs/lib",
     "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
     "//third_party/e2fsprogs/e2fsprogs/misc",
-    "//third_party/selinux/libselinux/include",
   ]
 
   deps = [
@@ -76,8 +74,9 @@ ohos_executable("e2fsdroid") {
     ":libext2_com_err",
     ":libext2_misc",
     ":libext2fs",
-    "//third_party/selinux:libselinux",
   ]
+
+  external_deps = [ "selinux:libselinux" ]
 
   install_enable = true
   subsystem_name = "thirdparty"
@@ -135,7 +134,6 @@ ohos_executable("e2fsck") {
     "//third_party/e2fsprogs/e2fsprogs/e2fsck",
     "//third_party/e2fsprogs/e2fsprogs/lib",
     "//third_party/e2fsprogs/e2fsprogs/lib/ext2fs",
-    "//third_party/mtd-utils/lib",
   ]
 
   deps = [
