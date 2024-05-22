@@ -25,7 +25,8 @@
         "ram": "",
         "deps": {
             "components": [
-                "selinux"
+                "selinux",
+                "c_utils"
             ],
             "third_party": []
         },
