@@ -1,7 +1,7 @@
-diff --git a/e2fsprogs/lib/blkid/probe.c b/e2fsprogs/lib/blkid/probe.c
+diff --git a/lib/blkid/probe.c b/lib/blkid/probe.c
 index b8b6558..1111c93 100644
---- a/e2fsprogs/lib/blkid/probe.c
-+++ b/e2fsprogs/lib/blkid/probe.c
+--- a/lib/blkid/probe.c
++++ b/lib/blkid/probe.c
 @@ -1440,6 +1440,22 @@ static int probe_f2fs(struct blkid_probe *probe,
      return 0;
  }
@@ -33,10 +33,10 @@ index b8b6558..1111c93 100644
    { "exfat",     0,      3,  8, "EXFAT   ",             probe_exfat },
    {   NULL,	 0,	 0,  0, NULL,			NULL }
  };
-diff --git a/e2fsprogs/lib/blkid/probe.h b/e2fsprogs/lib/blkid/probe.h
+diff --git a/lib/blkid/probe.h b/lib/blkid/probe.h
 index dea4081..be79c42 100644
---- a/e2fsprogs/lib/blkid/probe.h
-+++ b/e2fsprogs/lib/blkid/probe.h
+--- a/lib/blkid/probe.h
++++ b/lib/blkid/probe.h
 @@ -765,6 +765,8 @@ struct f2fs_super_block {
      __u8 extension_list[F2FS_MAX_EXTENSION][8]; /* extension array */
  } __attribute__((__packed__));
