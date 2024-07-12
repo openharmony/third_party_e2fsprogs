@@ -1,0 +1,4 @@
+diff --git a/lib/blkid/probe.c b/lib/blkid/probe.c
+index b8b6558..1111c93 100644
+--- a/lib/blkid/probe.c
++++ b/lib/blkid/probe.c
