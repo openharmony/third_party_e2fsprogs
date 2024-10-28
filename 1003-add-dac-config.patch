@@ -29,6 +29,7 @@ index 00000000..422e0d52
 +#include <unordered_map>
 +#include <vector>
 +#include <linux/capability.h>
++#include <limits.h>
 +
 +using namespace std;
 +
@@ -151,10 +152,16 @@ index 00000000..422e0d52
 +    DAC_NUM
 +};
 +
++
 +extern "C" {
 +    int LoadDacConfig(const char* fn)
 +    {
-+        ifstream readFile(fn);
++        char resolvedPath[PATH_MAX] = {'\0'};
++        char *canonicalPath = realpath(fn, resolvedPath);
++        if (canonicalPath == nullptr) {
++           return -1;
++        }
++        ifstream readFile(canonicalPath);
 +        if (readFile.fail()) {
 +            return -1;
 +        }
