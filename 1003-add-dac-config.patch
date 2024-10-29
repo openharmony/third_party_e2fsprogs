@@ -3,7 +3,7 @@ new file mode 100644
 index 00000000..422e0d52
 --- /dev/null
 +++ b/contrib/android/dac_config.cpp
-@@ -0,0 +1,240 @@
+@@ -0,0 +1,246 @@
 +/*
 + * Copyright (c) 2021-2024 Huawei Device Co., Ltd.
 + * This program is free software; you can redistribute it and/or modify
@@ -151,7 +151,6 @@ index 00000000..422e0d52
 +    DAC_CAP_IDX,
 +    DAC_NUM
 +};
-+
 +
 +extern "C" {
 +    int LoadDacConfig(const char* fn)
