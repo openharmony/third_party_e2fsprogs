@@ -71,6 +71,9 @@
                 },
                 {
                     "name": "//third_party/e2fsprogs:libdacconfig"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:e2fsprogs"
                 }
             ],
             "test": []
