@@ -34,10 +34,6 @@
             "sub_component": [],
             "inner_kits": [
                 {
-                    "header": {
-                        "header_base": "//third_party/e2fsprogs/e2fsprogs/lib",
-                        "header_files": ["config.h"]
-                    },
                     "name": "//third_party/e2fsprogs:libext2_blkid"
                 },
                 {
@@ -75,6 +71,9 @@
                 },
                 {
                     "name": "//third_party/e2fsprogs:libdacconfig"
+                },
+                {
+                    "name": "//third_party/e2fsprogs:e2fsprogs"
                 }
             ],
             "test": []

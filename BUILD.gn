@@ -168,16 +168,11 @@ config("libext2_blkid-defaults") {
   defines = [ "secure_getenv=getenv" ]
 }
 
-config("libext2_blkid_public_config") {
-  include_dirs = [ "//third_party/e2fsprogs/e2fsprogs/lib" ]
-}
-
 ohos_shared_library("libext2_blkid") {
   configs = [
     ":libext2_blkid-defaults",
     ":libext2-headers",
   ]
-  public_configs = [ ":libext2_blkid_public_config" ]
   sources = [
     "e2fsprogs/lib/blkid/cache.c",
     "e2fsprogs/lib/blkid/dev.c",
