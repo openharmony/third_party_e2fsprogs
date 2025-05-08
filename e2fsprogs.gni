@@ -1,3 +1,0 @@
-e2fsprogs_path = rebase_path("//third_party/e2fsprogs")
-exec_script("install.sh", [ "$e2fsprogs_path" ])
-print("e2fsprogs installed successfully")

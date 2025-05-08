@@ -35,7 +35,7 @@
             "inner_kits": [
                 {
                     "header": {
-                        "header_base": "//third_party/e2fsprogs/e2fsprogs/lib",
+                        "header_base": "${root_gen_dir}/third_party/e2fsprogs/e2fsprogs/lib",
                         "header_files": ["config.h"]
                     },
                     "name": "//third_party/e2fsprogs:libext2_blkid"
