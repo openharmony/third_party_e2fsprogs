@@ -1,53 +1,11 @@
 Name:           e2fsprogs
-Version:        1.46.4
-Release:        24
+Version:        1.47.2
+Release:        1
 Summary:        Second extended file system management tools
 License:        GPLv2+ and LGPLv2 and MIT
 URL:            http://e2fsprogs.sourceforge.net/
 Source0:        https://www.kernel.org/pub/linux/kernel/people/tytso/%{name}/v%{version}/%{name}-%{version}.tar.xz
 Source1:        ext2_types-wrapper.h
-
-Patch1:		0001-e2fsprogs-set-hugefile-from-4T-to-1T-in-hugefile-tes.patch
-Patch2:		0002-libss-add-newer-libreadline.so.8-to-dlopen-path.patch
-Patch3:		0003-tests-update-expect-files-for-f_mmp_garbage.patch
-Patch4:		0004-tests-update-expect-files-for-f_large_dir-and-f_larg.patch
-Patch5:		0005-resize2fs-resize2fs-disk-hardlinks-will-be-error.patch
-Patch6:		0006-e2fsck-exit-journal-recovery-when-find-EIO-ENOMEM-er.patch
-Patch7:		0007-e2fsck-exit-journal-recovery-when-jounral-superblock.patch
-Patch8:		0008-e2fsck-add-env-param-E2FS_UNRELIABLE_IO-to-fi.patch
-Patch9:		0009-e2mmpstatus.8.in-detele-filesystem-can-be-UUID-or-LA.patch		
-Patch10:	0010-tests-update-expect-file-for-u_direct_io.patch
-Patch11:	0011-libext2fs-don-t-old-the-CACHE_MTX-while-doing-I-O.patch
-Patch12:	0012-tests-fix-ACL-printing-tests.patch
-Patch13:	0013-e2fsck-do-not-clean-up-file-acl-if-the-inode-is-trun.patch
-Patch14:	0014-e2fsck-handle-level-is-overflow-in-ext2fs_extent_get.patch
-Patch15:	0015-libext2fs-add-sanity-check-to-extent-manipulation.patch
-Patch16:        0016-e2fsprogs-add-sw64.patch
-Patch17:	0017-tune2fs-do-not-change-j_tail_sequence-in-journal-sup.patch
-Patch18:	0018-debugfs-teach-logdump-the-n-num_trans-option.patch
-Patch19:	0019-tune2fs-fix-tune2fs-segfault-when-ext2fs_run_ext3_jo.patch
-Patch20:	0020-tune2fs-tune2fs_main-should-return-rc-when-some-erro.patch
-Patch21:	0021-tune2fs-exit-directly-when-fs-freed-in-ext2fs_run_ext3_journal.patch
-Patch22:	0022-unix_io.c-fix-deadlock-problem-in-unix_write_blk64.patch
-Patch23:	0023-debugfs-fix-repeated-output-problem-with-logdump-O-n.patch
-Patch24:        0024-tune2fs-check-return-value-of-ext2fs_mmp_update2-in-.patch
-Patch25:        0025-mmp-fix-wrong-comparison-in-ext2fs_mmp_stop.patch
-Patch26:        0026-misc-fsck.c-Processes-may-kill-other-processes.patch
-Patch27:        0027-dumpe2fs-resize2fs-avoid-memory-leak-on-error-path.patch
-Patch28:        0028-libext2fs-fix-memory-leak-in-error-path-while-openin.patch
-Patch29:        0029-e2fsck-avoid-theoretical-null-dereference-in-end_pro.patch
-Patch30:        0030-e2fsck-fix-potential-out-of-bounds-read-in-inc_ea_in.patch
-Patch31:        0031-e2fsck-avoid-out-of-bounds-write-for-very-deep-exten.patch
-Patch32:        0032-e2fsck-fix-potential-fencepost-error-in-e2fsck_shoul.patch
-Patch33:        0033-libext2fs-fix-potential-integer-overflow-in-bitmap-a.patch
-Patch34:        0034-tune2fs-fix-an-error-message.patch
-Patch35:        0035-e2fsck-don-t-allow-journal-inode-to-have-encrypt-fla.patch
-Patch36:        0036-lib-ext2fs-fix-unbalanced-mutex-unlock-for-BOUNCE_MT.patch
-Patch37:        0037-libext2fs-fix-ext2fs_compare_generic_bmap-logic.patch
-Patch38:        0038-Quiet-unused-variable-warnings.patch
-Patch39:        0039-ext2fs-Use-64bit-lseek-when-_FILE_OFFSET_BITS-is-64.patch
-Patch40:        0040-e2fsck-fix-bad-htree-checksums-in-preen-mode.patch
-Patch41:	0041-debugfs-Fix-infinite-loop-when-dump-log.patch
 
 BuildRequires:  gcc pkgconfig texinfo
 BuildRequires:  fuse-devel libblkid-devel libuuid-devel
@@ -187,6 +145,8 @@ exit 0
 %{_mandir}/man8/*
 
 %changelog
+* Sun May 11 2025 zhangdaiyue <zhangdaiyue1@huawei.com> - 1.47.2-1
+- Switch openEuler:e2fsprogs to e2fsprogs, and update package to v1.47.2
 * Tue Dec 19 2023 haowenchao <haowenchao2@huawei.com> - 1.46.4-24
 - debugfs: Fix infinite loop when dump log
 
