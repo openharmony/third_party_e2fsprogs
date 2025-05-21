@@ -6,47 +6,6 @@ action("e2fsprogs_action") {
   script = "//third_party/e2fsprogs/install.sh"
   inputs = [
     "//third_party/e2fsprogs/e2fsprogs.tar.xz",
-    "//third_party/e2fsprogs/0001-e2fsprogs-set-hugefile-from-4T-to-1T-in-hugefile-tes.patch",
-    "//third_party/e2fsprogs/0002-libss-add-newer-libreadline.so.8-to-dlopen-path.patch",
-    "//third_party/e2fsprogs/0003-tests-update-expect-files-for-f_mmp_garbage.patch",
-    "//third_party/e2fsprogs/0004-tests-update-expect-files-for-f_large_dir-and-f_larg.patch",
-    "//third_party/e2fsprogs/0005-resize2fs-resize2fs-disk-hardlinks-will-be-error.patch",
-    "//third_party/e2fsprogs/0006-e2fsck-exit-journal-recovery-when-find-EIO-ENOMEM-er.patch",
-    "//third_party/e2fsprogs/0007-e2fsck-exit-journal-recovery-when-jounral-superblock.patch",
-    "//third_party/e2fsprogs/0008-e2fsck-add-env-param-E2FS_UNRELIABLE_IO-to-fi.patch",
-    "//third_party/e2fsprogs/0009-e2mmpstatus.8.in-detele-filesystem-can-be-UUID-or-LA.patch",
-    "//third_party/e2fsprogs/0010-tests-update-expect-file-for-u_direct_io.patch",
-    "//third_party/e2fsprogs/0011-libext2fs-don-t-old-the-CACHE_MTX-while-doing-I-O.patch",
-    "//third_party/e2fsprogs/0012-tests-fix-ACL-printing-tests.patch",
-    "//third_party/e2fsprogs/0013-e2fsck-do-not-clean-up-file-acl-if-the-inode-is-trun.patch",
-    "//third_party/e2fsprogs/0014-e2fsck-handle-level-is-overflow-in-ext2fs_extent_get.patch",
-    "//third_party/e2fsprogs/0015-libext2fs-add-sanity-check-to-extent-manipulation.patch",
-    "//third_party/e2fsprogs/0016-e2fsprogs-add-sw64.patch",
-    "//third_party/e2fsprogs/0017-tune2fs-do-not-change-j_tail_sequence-in-journal-sup.patch",
-    "//third_party/e2fsprogs/0018-debugfs-teach-logdump-the-n-num_trans-option.patch",
-    "//third_party/e2fsprogs/0019-tune2fs-fix-tune2fs-segfault-when-ext2fs_run_ext3_jo.patch",
-    "//third_party/e2fsprogs/0020-tune2fs-tune2fs_main-should-return-rc-when-some-erro.patch",
-    "//third_party/e2fsprogs/0021-tune2fs-exit-directly-when-fs-freed-in-ext2fs_run_ext3_journal.patch",
-    "//third_party/e2fsprogs/0022-unix_io.c-fix-deadlock-problem-in-unix_write_blk64.patch",
-    "//third_party/e2fsprogs/0023-debugfs-fix-repeated-output-problem-with-logdump-O-n.patch",
-    "//third_party/e2fsprogs/0024-tune2fs-check-return-value-of-ext2fs_mmp_update2-in-.patch",
-    "//third_party/e2fsprogs/0025-mmp-fix-wrong-comparison-in-ext2fs_mmp_stop.patch",
-    "//third_party/e2fsprogs/0026-misc-fsck.c-Processes-may-kill-other-processes.patch",
-    "//third_party/e2fsprogs/0027-dumpe2fs-resize2fs-avoid-memory-leak-on-error-path.patch",
-    "//third_party/e2fsprogs/0028-libext2fs-fix-memory-leak-in-error-path-while-openin.patch",
-    "//third_party/e2fsprogs/0029-e2fsck-avoid-theoretical-null-dereference-in-end_pro.patch",
-    "//third_party/e2fsprogs/0030-e2fsck-fix-potential-out-of-bounds-read-in-inc_ea_in.patch",
-    "//third_party/e2fsprogs/0031-e2fsck-avoid-out-of-bounds-write-for-very-deep-exten.patch",
-    "//third_party/e2fsprogs/0032-e2fsck-fix-potential-fencepost-error-in-e2fsck_shoul.patch",
-    "//third_party/e2fsprogs/0033-libext2fs-fix-potential-integer-overflow-in-bitmap-a.patch",
-    "//third_party/e2fsprogs/0034-tune2fs-fix-an-error-message.patch",
-    "//third_party/e2fsprogs/0035-e2fsck-don-t-allow-journal-inode-to-have-encrypt-fla.patch",
-    "//third_party/e2fsprogs/0036-lib-ext2fs-fix-unbalanced-mutex-unlock-for-BOUNCE_MT.patch",
-    "//third_party/e2fsprogs/0037-libext2fs-fix-ext2fs_compare_generic_bmap-logic.patch",
-    "//third_party/e2fsprogs/0038-Quiet-unused-variable-warnings.patch",
-    "//third_party/e2fsprogs/0039-ext2fs-Use-64bit-lseek-when-_FILE_OFFSET_BITS-is-64.patch",
-    "//third_party/e2fsprogs/0040-e2fsck-fix-bad-htree-checksums-in-preen-mode.patch",
-    "//third_party/e2fsprogs/0041-debugfs-Fix-infinite-loop-when-dump-log.patch",
     "//third_party/e2fsprogs/1001-image-make.patch",
     "//third_party/e2fsprogs/1002-add-header-file-to-musl-compile-mk2efs.patch",
     "//third_party/e2fsprogs/1003-add-dac-config.patch",
@@ -173,6 +132,7 @@ action("e2fsprogs_action") {
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/gen_bitmap64.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/get_num_dirs.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/get_pathname.c",
+    "${target_gen_dir}/e2fsprogs/lib/ext2fs/getenv.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/getsectsize.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/getsize.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/hashmap.c",
@@ -197,6 +157,7 @@ action("e2fsprogs_action") {
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/newdir.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/nls_utf8.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/openfs.c",
+    "${target_gen_dir}/e2fsprogs/lib/ext2fs/orphan.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/progress.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/punch.c",
     "${target_gen_dir}/e2fsprogs/lib/ext2fs/qcow2.c",
@@ -231,6 +192,7 @@ action("e2fsprogs_action") {
     "${target_gen_dir}/e2fsprogs/lib/ss/requests.c",
     "${target_gen_dir}/e2fsprogs/lib/ss/ss_err.c",
     "${target_gen_dir}/e2fsprogs/lib/ss/std_rqs.c",
+    "${target_gen_dir}/e2fsprogs/lib/support/devname.c",
     "${target_gen_dir}/e2fsprogs/lib/support/dict.c",
     "${target_gen_dir}/e2fsprogs/lib/support/mkquota.c",
     "${target_gen_dir}/e2fsprogs/lib/support/parse_qtype.c",
@@ -253,6 +215,7 @@ action("e2fsprogs_action") {
     "${target_gen_dir}/e2fsprogs/lib/uuid/unparse.c",
     "${target_gen_dir}/e2fsprogs/lib/uuid/uuid_time.c",
     "${target_gen_dir}/e2fsprogs/misc/create_inode.c",
+    "${target_gen_dir}/e2fsprogs/misc/create_inode_libarchive.c",
     "${target_gen_dir}/e2fsprogs/misc/default_profile.c",
     "${target_gen_dir}/e2fsprogs/misc/mk_hugefiles.c",
     "${target_gen_dir}/e2fsprogs/misc/mke2fs.c",
@@ -626,6 +589,7 @@ ohos_shared_library("libext2fs") {
     "${E2FSPROGS_DIR}/lib/ext2fs/gen_bitmap64.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/get_num_dirs.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/get_pathname.c",
+    "${E2FSPROGS_DIR}/lib/ext2fs/getenv.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/getsectsize.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/getsize.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/hashmap.c",
@@ -650,6 +614,7 @@ ohos_shared_library("libext2fs") {
     "${E2FSPROGS_DIR}/lib/ext2fs/newdir.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/nls_utf8.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/openfs.c",
+    "${E2FSPROGS_DIR}/lib/ext2fs/orphan.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/progress.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/punch.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/qcow2.c",
@@ -731,6 +696,7 @@ config("libext2_support-defaults") {
 
 ohos_shared_library("libext2_quota") {
   sources = [
+    "${E2FSPROGS_DIR}/lib/support/devname.c",
     "${E2FSPROGS_DIR}/lib/support/dict.c",
     "${E2FSPROGS_DIR}/lib/support/mkquota.c",
     "${E2FSPROGS_DIR}/lib/support/parse_qtype.c",
@@ -841,12 +807,18 @@ config("libext2_misc-defaults") {
 
 ohos_shared_library("libext2_misc") {
   configs = [ ":libext2_misc-defaults" ]
-  sources = [ "${E2FSPROGS_DIR}/misc/create_inode.c" ]
+  sources = [
+    "${E2FSPROGS_DIR}/misc/create_inode.c",
+    "${E2FSPROGS_DIR}/misc/create_inode_libarchive.c"
+  ]
   include_dirs = [
     "${E2FSPROGS_DIR}/misc",
     "${E2FSPROGS_DIR}/lib",
   ]
-  cflags = [ "-Wno-error=format-extra-args" ]
+  cflags = [
+    "-Wno-error=format-extra-args",
+    "-Wno-c2x-extensions"
+  ]
 
   deps = [
     ":libext2_com_err",
