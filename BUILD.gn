@@ -352,6 +352,7 @@ ohos_shared_library("libext2fs") {
     "e2fsprogs/lib/ext2fs/gen_bitmap64.c",
     "e2fsprogs/lib/ext2fs/get_num_dirs.c",
     "e2fsprogs/lib/ext2fs/get_pathname.c",
+    "e2fsprogs/lib/ext2fs/getenv.c",
     "e2fsprogs/lib/ext2fs/getsectsize.c",
     "e2fsprogs/lib/ext2fs/getsize.c",
     "e2fsprogs/lib/ext2fs/hashmap.c",
@@ -376,6 +377,7 @@ ohos_shared_library("libext2fs") {
     "e2fsprogs/lib/ext2fs/newdir.c",
     "e2fsprogs/lib/ext2fs/nls_utf8.c",
     "e2fsprogs/lib/ext2fs/openfs.c",
+    "e2fsprogs/lib/ext2fs/orphan.c",
     "e2fsprogs/lib/ext2fs/progress.c",
     "e2fsprogs/lib/ext2fs/punch.c",
     "e2fsprogs/lib/ext2fs/qcow2.c",
@@ -457,6 +459,7 @@ config("libext2_support-defaults") {
 
 ohos_shared_library("libext2_quota") {
   sources = [
+    "e2fsprogs/lib/support/devname.c",
     "e2fsprogs/lib/support/dict.c",
     "e2fsprogs/lib/support/mkquota.c",
     "e2fsprogs/lib/support/parse_qtype.c",
@@ -564,12 +567,18 @@ config("libext2_misc-defaults") {
 
 ohos_shared_library("libext2_misc") {
   configs = [ ":libext2_misc-defaults" ]
-  sources = [ "e2fsprogs/misc/create_inode.c" ]
+  sources = [
+    "e2fsprogs/misc/create_inode.c",
+    "e2fsprogs/misc/create_inode_libarchive.c"
+  ]
   include_dirs = [
     "//third_party/e2fsprogs/e2fsprogs/misc",
     "//third_party/e2fsprogs/e2fsprogs/lib",
   ]
-  cflags = [ "-Wno-error=format-extra-args" ]
+  cflags = [
+    "-Wno-error=format-extra-args",
+    "-Wno-c2x-extensions"
+  ]
 
   deps = [
     ":libext2_com_err",

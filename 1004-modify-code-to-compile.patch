@@ -17,30 +17,17 @@ index 1beb1e25bee8f1d4d33f1bf1b0e36064c567d544..622ad570f2eabc201e0e69cae4dc4ca8
 +#ifndef _GNU_SOURCE
  #define _GNU_SOURCE
 +#endif
- 
+
+ #include "config.h"
  #include <stdio.h>
- #include <getopt.h>
 diff --git a/contrib/android/perms.c b/contrib/android/perms.c
 index 680d348e38e9374c2352dc66633132b95fe867fd..bfe06ca365682d4a508dd1634860a9abcf2c6c4b 100644
 --- a/contrib/android/perms.c
 +++ b/contrib/android/perms.c
-@@ -3,6 +3,7 @@
- #endif
+@@ -4,6 +4,7 @@
+ #include "config.h"
  #include "perms.h"
  #include "support/nls-enable.h"
 +#include <linux/capability.h>
  #include <time.h>
  #include <sys/stat.h>
- 
-diff --git a/misc/blkid.c b/misc/blkid.c
-index 472f0179ee99ba28c51c2ce48561394482da753b..e46efc707daaf5867bea6cd415b9637e6c5bba61 100644
---- a/misc/blkid.c
-+++ b/misc/blkid.c
-@@ -17,6 +17,7 @@
- #ifdef HAVE_TERMIOS_H
- #include <termios.h>
- #endif
-+#undef HAVE_TERMIO_H
- #ifdef HAVE_TERMIO_H
- #include <termio.h>
- #endif
