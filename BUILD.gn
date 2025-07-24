@@ -11,7 +11,8 @@ action("e2fsprogs_action") {
     "//third_party/e2fsprogs/1003-add-dac-config.patch",
     "//third_party/e2fsprogs/1004-modify-code-to-compile.patch",
     "//third_party/e2fsprogs/1005-read-vfat-chinese-label.patch",
-    "//third_party/e2fsprogs/1006-add-hmfs-for-blkid.patch"
+    "//third_party/e2fsprogs/1006-add-hmfs-for-blkid.patch",
+    "//third_party/e2fsprogs/1007-blkid-support-skip-specified-filesystem.patch"
   ]
   outputs = [
     "${target_gen_dir}/e2fsprogs",
@@ -234,6 +235,7 @@ action("e2fsprogs_action") {
 }
 
 E2FSPROGS_DIR = rebase_path("${target_gen_dir}/e2fsprogs")
+print("E2FSPROGS_DIR is ${E2FSPROGS_DIR}")
 
 group("e2fsprogs") {
   deps = [

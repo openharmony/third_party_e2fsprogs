@@ -7,7 +7,6 @@
 # Copyright(c) 2023 Huawei Device Co., Ltd.
 
 set -e
-set -x
 mkdir -p $1
 cd $1
 touch test.lock
