@@ -24,5 +24,6 @@ patch -p1 < $2/1004-modify-code-to-compile.patch --fuzz=0 --no-backup-if-mismatc
 patch -p1 < $2/1005-read-vfat-chinese-label.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $2/1006-add-hmfs-for-blkid.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $2/1007-blkid-support-skip-specified-filesystem.patch --fuzz=0 --no-backup-if-mismatch
+patch -p1 < $2/1008-blkid-enlarge-cluster-for-ntfs.patch --fuzz=0 --no-backup-if-mismatch
 exit 0
 )200>test.lock

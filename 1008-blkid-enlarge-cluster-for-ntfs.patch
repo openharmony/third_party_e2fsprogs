@@ -1,0 +1,42 @@
+From 211ecdaae8b7e279361080443d42aba2a8c97f3d Mon Sep 17 00:00:00 2001
+From: j30053360 <jiangqianrong1@huawei.com>
+Date: Mon, 27 Oct 2025 17:43:31 +0800
+Subject: [PATCH] Blkid: Enlarge cluster for ntfs
+
+---
+ lib/blkid/probe.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/lib/blkid/probe.c b/lib/blkid/probe.c
+index 6a3bb247..faac82de 100644
+--- a/lib/blkid/probe.c
++++ b/lib/blkid/probe.c
+@@ -700,7 +700,24 @@ static int probe_ntfs(struct blkid_probe *probe,
+
+	bytes_per_sector = ns->bios_parameter_block[0] +
+		(ns->bios_parameter_block[1]  << 8);
+-	sectors_per_cluster = ns->bios_parameter_block[2];
++
++	switch (ns->bios_parameter_block[2]) {
++		case 1:
++		case 2:
++		case 4:
++		case 8:
++		case 16:
++		case 32:
++		case 64:
++		case 128:
++			sectors_per_cluster = ns->bios_parameter_block[2];
++			break;
++		default:
++			if ((ns->bios_parameter_block[2] < 240)
++			|| (ns->bios_parameter_block[2] > 249))
++				return 1;
++			sectors_per_cluster = 1 << (256 - ns->bios_parameter_block[2]);
++	}
+
+	if ((bytes_per_sector < 512) || (sectors_per_cluster == 0))
+		return 1;
+--
+2.25.1
+
