@@ -72,7 +72,7 @@ index 472f017..368f3f5 100644
  	int c;
  
 -	while ((c = getopt (argc, argv, "c:f:ghlLo:s:t:w:v")) != EOF)
-+	while ((c = getopt (argc, argv, "c:f:ghlLo:s:t:w:v:n:")) != EOF)
++	while ((c = getopt (argc, argv, "c:f:ghlLo:s:t:w:n:v")) != EOF)
  		switch (c) {
  		case 'c':
  			read = optarg;
