@@ -903,8 +903,8 @@ ohos_executable("blkid") {
   ]
 
   install_enable = true
-  subsystem_name = "filemanagement"
-  part_name = "storage_service"
+  subsystem_name = "thirdparty"
+  part_name = "e2fsprogs"
   install_images = [
     "system",
     "updater",
