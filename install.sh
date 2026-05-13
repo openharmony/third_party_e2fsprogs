@@ -25,6 +25,6 @@ patch -p1 < $2/1005-read-vfat-chinese-label.patch --fuzz=0 --no-backup-if-mismat
 patch -p1 < $2/1006-add-hmfs-for-blkid.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $2/1007-blkid-support-skip-specified-filesystem.patch --fuzz=0 --no-backup-if-mismatch
 patch -p1 < $2/1008-blkid-enlarge-cluster-for-ntfs.patch --fuzz=0 --no-backup-if-mismatch
-patch -p1 < $2/1009-Support-print-volume-name-of-f2fs --fuzz=0 --no-backup-if-mismatch
+patch -p1 < $2/1009-Support-print-volume-name-of-f2fs.patch --fuzz=0 --no-backup-if-mismatch
 exit 0
 )200>test.lock
