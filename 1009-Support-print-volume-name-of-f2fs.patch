@@ -1,0 +1,41 @@
+From a0b8b123a43b9639fcfc72896b5d9930ce5abe65 Mon Sep 17 00:00:00 2001
+From: y00966934 <yangsunan1@huawei.com>
+Date: Wed, 13 May 2026 11:16:38 +0800
+Subject: [PATCH] Support print volume name of f2fs
+
+Signed-off-by: Yang sunan <yangsunan1@huawei.com>
+---
+ lib/blkid/probe.c | 5 +++++
+ lib/blkid/probe.h | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/lib/blkid/probe.c b/lib/blkid/probe.c
+index 6a3bb247..5c4c974f 100644
+--- a/lib/blkid/probe.c
++++ b/lib/blkid/probe.c
+@@ -1435,6 +1435,11 @@ static int probe_f2fs(struct blkid_probe *probe,
+
+     bs = (struct f2fs_super_block *)buf;
+     set_uuid(probe->dev, bs->uuid, 0);
++	if (bs->volume_name[0] != 0) {
++        unsigned char vol_name_utf8[F2FS_LABEL_SIZE + 1] = {0};
++        unicode_16le_to_utf8(vol_name_utf8, F2FS_LABEL_SIZE, (const unsigned char*)bs->volume_name, F2FS_LABEL_SIZE * sizeof(__u16));
++        blkid_set_tag(probe->dev, "LABEL", vol_name_utf8, F2FS_LABEL_SIZE);
++    }
+     return 0;
+ }
+
+diff --git a/lib/blkid/probe.h b/lib/blkid/probe.h
+index 063a5b5c..ee9f6723 100644
+--- a/lib/blkid/probe.h
++++ b/lib/blkid/probe.h
+@@ -730,6 +730,7 @@ struct btrfs_super_block {
+ } __attribute__ ((__packed__));
+
+ #define F2FS_MAX_EXTENSION      64  /* # of extension entries */
++#define F2FS_LABEL_SIZE         512  /* # of volume name */
+
+ struct f2fs_super_block {
+     __u32 magic;           /* Magic Number */
+--
+2.34.1
