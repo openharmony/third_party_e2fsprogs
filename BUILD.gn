@@ -263,6 +263,7 @@ group("e2fsprogs_host_toolchain") {
 }
 
 ohos_static_library("libdacconfig") {
+  branch_protector_ret = "pac_ret"
   output_name = "libdacconfig"
 
   sources = [ "${E2FSPROGS_DIR}/contrib/android/dac_config.cpp" ]
@@ -284,6 +285,7 @@ config("e2fsdroid_libext2_uuid") {
 ######################################################
 ##Build e2fsdroid
 ohos_executable("e2fsdroid") {
+  branch_protector_ret = "pac_ret"
   configs = [ ":e2fsdroid-defaults" ]
 
   defines = [ "HAVE_SYS_TYPES_H" ]
@@ -334,6 +336,7 @@ config("e2fsck-defaults") {
 }
 
 ohos_executable("e2fsck") {
+  branch_protector_ret = "pac_ret"
   configs = [ ":e2fsck-defaults" ]
   sources = [
     "${E2FSPROGS_DIR}/e2fsck/badblocks.c",
@@ -410,6 +413,7 @@ config("libext2_blkid_public_config") {
 }
 
 ohos_shared_library("libext2_blkid") {
+  branch_protector_ret = "pac_ret"
   configs = [
     ":libext2_blkid-defaults",
     ":libext2-headers",
@@ -457,6 +461,7 @@ config("libext2_e2p-defaults") {
 }
 
 ohos_shared_library("libext2_e2p") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/e2p/encoding.c",
     "${E2FSPROGS_DIR}/lib/e2p/errcode.c",
@@ -515,6 +520,7 @@ config("libext2_com_err-defaults") {
 }
 
 ohos_shared_library("libext2_com_err") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/et/com_err.c",
     "${E2FSPROGS_DIR}/lib/et/com_right.c",
@@ -551,6 +557,7 @@ config("libext2fs-defaults") {
 }
 
 ohos_shared_library("libext2fs") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/ext2fs/alloc.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/alloc_sb.c",
@@ -663,6 +670,7 @@ config("libext2_ss-headers") {
 }
 
 ohos_static_library("libext2_ss") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/ss/data.c",
     "${E2FSPROGS_DIR}/lib/ss/error.c",
@@ -697,6 +705,7 @@ config("libext2_support-defaults") {
 }
 
 ohos_shared_library("libext2_quota") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/support/devname.c",
     "${E2FSPROGS_DIR}/lib/support/dict.c",
@@ -733,6 +742,7 @@ ohos_shared_library("libext2_quota") {
 ###################################################
 ###Build libext2_profile
 ohos_static_library("libext2_profile") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/support/prof_err.c",
     "${E2FSPROGS_DIR}/lib/support/profile.c",
@@ -749,6 +759,7 @@ ohos_static_library("libext2_profile") {
 ###################################################
 ###Build libext2_support
 ohos_static_library("libext2_support") {
+  branch_protector_ret = "pac_ret"
   sources = [ "${E2FSPROGS_DIR}/lib/support/cstring.c" ]
   include_dirs = [ "${E2FSPROGS_DIR}/lib/support" ]
   configs = [
@@ -768,6 +779,7 @@ config("libext2_uuid-defaults") {
 }
 
 ohos_shared_library("libext2_uuid") {
+  branch_protector_ret = "pac_ret"
   sources = [
     "${E2FSPROGS_DIR}/lib/uuid/clear.c",
     "${E2FSPROGS_DIR}/lib/uuid/compare.c",
@@ -808,6 +820,7 @@ config("libext2_misc-defaults") {
 }
 
 ohos_shared_library("libext2_misc") {
+  branch_protector_ret = "pac_ret"
   configs = [ ":libext2_misc-defaults" ]
   sources = [
     "${E2FSPROGS_DIR}/misc/create_inode.c",
@@ -839,6 +852,7 @@ ohos_shared_library("libext2_misc") {
 ###################################################
 ###Build mke2fs
 ohos_executable("mke2fs") {
+  branch_protector_ret = "pac_ret"
   configs = [ ":libext2_misc-defaults" ]
   sources = [
     "${E2FSPROGS_DIR}/misc/default_profile.c",
@@ -882,6 +896,7 @@ ohos_executable("mke2fs") {
 ###################################################
 ###Build blkid
 ohos_executable("blkid") {
+  branch_protector_ret = "pac_ret"
   configs = [ ":libext2_misc-defaults" ]
   sources = [ "${E2FSPROGS_DIR}/misc/blkid.c" ]
 
@@ -919,6 +934,7 @@ config("resize2fs-defaults") {
 }
 
 ohos_executable("resize2fs") {
+  branch_protector_ret = "pac_ret"
   configs = [ ":resize2fs-defaults" ]
   sources = [
     "${E2FSPROGS_DIR}/resize/extent.c",
