@@ -1,0 +1,22 @@
+/*
+ * Version script for libext2_misc.so (OpenHarmony GN build, see BUILD.gn).
+ * libext2_misc is built from misc/create_inode.c and
+ * misc/create_inode_libarchive.c. Exports the populate_fs API and helpers
+ * declared in misc/create_inode.h; everything else is hidden via local: *;.
+ * Reference from ohos_shared_library("libext2_misc"):
+ *     version_script = "libext2_misc.map"
+ */
+E2FSPROGS_1.0 {
+	global:
+		populate_fs*;
+		__populate_fs_from_tar;
+		add_link;
+		do_mkdir_internal;
+		do_mknod_internal;
+		do_symlink_internal;
+		do_write_internal;
+		set_inode_extra;
+
+	local:
+		*;
+};

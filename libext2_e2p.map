@@ -1,0 +1,32 @@
+/*
+ * Version script for libext2_e2p.so (OpenHarmony GN build, see BUILD.gn).
+ * Exports e2p_* plus the non-prefixed flag/version/project/list/parse/
+ * print helpers declared in lib/e2p/e2p.h; everything else is hidden via
+ * local: *;. Reference from ohos_shared_library("libext2_e2p"):
+ *     version_script = "libext2_e2p.map"
+ */
+E2FSPROGS_1.0 {
+	global:
+		e2p_*;
+		fgetflags;
+		fsetflags;
+		getflags;
+		setflags;
+		fgetversion;
+		fsetversion;
+		getversion;
+		setversion;
+		fgetproject;
+		fsetproject;
+		iterate_on_dir;
+		list_super;
+		list_super2;
+		parse_num_blocks;
+		parse_num_blocks2;
+		print_flags;
+		print_fs_errors;
+		print_fs_state;
+
+	local:
+		*;
+};

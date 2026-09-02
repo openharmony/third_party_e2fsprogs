@@ -1,0 +1,13 @@
+/*
+ * Version script for libext2_blkid.so (OpenHarmony GN build, see BUILD.gn).
+ * Exports the public blkid API (blkid_*); everything else is hidden via
+ * local: *;. Reference from ohos_shared_library("libext2_blkid"):
+ *     version_script = "libext2_blkid.map"
+ */
+E2FSPROGS_1.0 {
+	global:
+		blkid_*;
+
+	local:
+		*;
+};

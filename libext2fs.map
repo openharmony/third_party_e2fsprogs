@@ -1,0 +1,26 @@
+/*
+ * Version script for libext2fs.so (OpenHarmony GN build, see BUILD.gn).
+ * Exports the public ext2fs API: ext2fs_*, badblocks_list_*, the
+ * io_channel_* helpers and the io_manager objects, plus
+ * set_undo_io_* helpers. Everything else is hidden via local: *;.
+ * Reference from ohos_shared_library("libext2fs"):
+ *     version_script = "libext2fs.map"
+ */
+E2FSPROGS_1.0 {
+	global:
+		ext2fs_*;
+		badblocks_list_*;
+		io_channel_*;
+		unix_io_manager;
+		unixfd_io_manager;
+		sparse_io_manager;
+		sparsefd_io_manager;
+		undo_io_manager;
+		test_io_manager;
+		test_io_backing_manager;
+		windows_io_manager;
+		set_undo_io_*;
+
+	local:
+		*;
+};

@@ -414,6 +414,7 @@ config("libext2_blkid_public_config") {
 
 ohos_shared_library("libext2_blkid") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_blkid.map"
   configs = [
     ":libext2_blkid-defaults",
     ":libext2-headers",
@@ -462,6 +463,7 @@ config("libext2_e2p-defaults") {
 
 ohos_shared_library("libext2_e2p") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_e2p.map"
   sources = [
     "${E2FSPROGS_DIR}/lib/e2p/encoding.c",
     "${E2FSPROGS_DIR}/lib/e2p/errcode.c",
@@ -521,6 +523,7 @@ config("libext2_com_err-defaults") {
 
 ohos_shared_library("libext2_com_err") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_com_err.map"
   sources = [
     "${E2FSPROGS_DIR}/lib/et/com_err.c",
     "${E2FSPROGS_DIR}/lib/et/com_right.c",
@@ -558,6 +561,7 @@ config("libext2fs-defaults") {
 
 ohos_shared_library("libext2fs") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2fs.map"
   sources = [
     "${E2FSPROGS_DIR}/lib/ext2fs/alloc.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/alloc_sb.c",
@@ -706,6 +710,7 @@ config("libext2_support-defaults") {
 
 ohos_shared_library("libext2_quota") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_quota.map"
   sources = [
     "${E2FSPROGS_DIR}/lib/support/devname.c",
     "${E2FSPROGS_DIR}/lib/support/dict.c",
@@ -780,6 +785,7 @@ config("libext2_uuid-defaults") {
 
 ohos_shared_library("libext2_uuid") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_uuid.map"
   sources = [
     "${E2FSPROGS_DIR}/lib/uuid/clear.c",
     "${E2FSPROGS_DIR}/lib/uuid/compare.c",
@@ -821,6 +827,7 @@ config("libext2_misc-defaults") {
 
 ohos_shared_library("libext2_misc") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_misc.map"
   configs = [ ":libext2_misc-defaults" ]
   sources = [
     "${E2FSPROGS_DIR}/misc/create_inode.c",

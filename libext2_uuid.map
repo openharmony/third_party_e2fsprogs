@@ -1,0 +1,13 @@
+/*
+ * Version script for libext2_uuid.so (OpenHarmony GN build, see BUILD.gn).
+ * Exports the public uuid API (uuid_*); everything else is hidden via
+ * local: *;. Reference from ohos_shared_library("libext2_uuid"):
+ *     version_script = "libext2_uuid.map"
+ */
+E2FSPROGS_1.0 {
+	global:
+		uuid_*;
+
+	local:
+		*;
+};

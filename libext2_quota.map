@@ -1,0 +1,28 @@
+/*
+ * Version script for libext2_quota.so (OpenHarmony GN build, see BUILD.gn).
+ * libext2_quota bundles lib/support. Exports the quota/profile/plausible/
+ * dict/qtree API surface (quota_*, profile_*, plausible_*, dict_*, dnode_*,
+ * qtree_* and a
+ * few non-prefixed helpers); everything else is hidden via local: *;.
+ * Reference from ohos_shared_library("libext2_quota"):
+ *     version_script = "libext2_quota.map"
+ */
+E2FSPROGS_1.0 {
+	global:
+		quota_*;
+		profile_*;
+		plausible_*;
+		dict_*;
+		dnode_*;
+		qtree_*;
+		check_plausibility;
+		get_devname;
+		get_empty_dquot;
+		parse_quota_opts;
+		parse_quota_types;
+		update_grace_times;
+		toqb;
+
+	local:
+		*;
+};
