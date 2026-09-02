@@ -1,22 +1,25 @@
-/*
- * Version script for libext2_misc.so (OpenHarmony GN build, see BUILD.gn).
- * libext2_misc is built from misc/create_inode.c and
- * misc/create_inode_libarchive.c. Exports the populate_fs API and helpers
- * declared in misc/create_inode.h; everything else is hidden via local: *;.
- * Reference from ohos_shared_library("libext2_misc"):
- *     version_script = "libext2_misc.map"
- */
-E2FSPROGS_1.0 {
-	global:
-		populate_fs*;
-		__populate_fs_from_tar;
-		add_link;
-		do_mkdir_internal;
-		do_mknod_internal;
-		do_symlink_internal;
-		do_write_internal;
-		set_inode_extra;
+# Copyright (c) 2026 Huawei Device Co., Ltd.
+#
+# This library is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-	local:
-		*;
+{
+global:
+    # create_inode.h - Public API
+    populate_fs;
+    populate_fs2;
+    do_mknod_internal;
+    do_symlink_internal;
+    do_mkdir_internal;
+    do_write_internal;
+    add_link;
+    set_inode_extra;
+
+    # create_inode_libarchive.h - Public API
+    __populate_fs_from_tar;
+
+local:
+    *;
 };
