@@ -1,28 +1,103 @@
-/*
- * Version script for libext2_quota.so (OpenHarmony GN build, see BUILD.gn).
- * libext2_quota bundles lib/support. Exports the quota/profile/plausible/
- * dict/qtree API surface (quota_*, profile_*, plausible_*, dict_*, dnode_*,
- * qtree_* and a
- * few non-prefixed helpers); everything else is hidden via local: *;.
- * Reference from ohos_shared_library("libext2_quota"):
- *     version_script = "libext2_quota.map"
- */
-E2FSPROGS_1.0 {
-	global:
-		quota_*;
-		profile_*;
-		plausible_*;
-		dict_*;
-		dnode_*;
-		qtree_*;
-		check_plausibility;
-		get_devname;
-		get_empty_dquot;
-		parse_quota_opts;
-		parse_quota_types;
-		update_grace_times;
-		toqb;
+# Copyright (c) 2026 Huawei Device Co., Ltd.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation.
 
-	local:
-		*;
+{
+global:
+    # quotaio.h - Public API
+    quota_file_open;
+    quota_file_create;
+    quota_file_close;
+    get_empty_dquot;
+    quota_inode_truncate;
+    quota_type2name;
+    quota_type2inum;
+    update_grace_times;
+    quota_get_qf_name;
+    quota_init_context;
+    quota_data_inodes;
+    quota_data_add;
+    quota_data_sub;
+    quota_write_inode;
+    quota_read_all_dquots;
+    quota_compute_usage;
+    quota_release_context;
+    quota_remove_inode;
+    quota_file_exists;
+    quota_set_sb_inum;
+    quota_compare_and_update;
+    parse_quota_opts;
+    parse_quota_types;
+
+    # profile.h - Public API
+    profile_init;
+    profile_release;
+    profile_set_default;
+    profile_get_string;
+    profile_get_integer;
+    profile_get_uint;
+    profile_get_double;
+    profile_get_boolean;
+    profile_iterator_create;
+    profile_iterator_free;
+    profile_iterator;
+    profile_set_syntax_err_cb;
+
+    # profile_helpers.h - Public API
+    profile_get_values;
+    profile_free_list;
+    profile_get_relation_names;
+    profile_get_subsection_names;
+    profile_release_string;
+    profile_init_path;
+
+    # quotaio_tree.h - Public API
+    qtree_write_dquot;
+    qtree_read_dquot;
+    qtree_delete_dquot;
+    qtree_entry_unused;
+    qtree_scan_dquots;
+    qtree_dqstr_in_blk;
+
+    # dict.h - Public API
+    dict_set_allocator;
+    dict_set_cmp_context;
+    dict_free_nodes;
+    dict_init;
+    dict_lookup;
+    dict_insert;
+    dict_alloc_insert;
+    dict_first;
+    dict_last;
+    dict_next;
+    dict_prev;
+    dict_count;
+    dict_isempty;
+    dict_isfull;
+    dict_contains;
+    dict_allow_dupes;
+    dnode_create;
+    dnode_init;
+    dnode_destroy;
+    dnode_get;
+    dnode_getkey;
+
+    # devname.h - Public API
+    get_devname;
+
+    # plausible.h - Public API
+    check_plausibility;
+
+    # dqblk_v2.h / quotaio.h - extern variables
+    quotafile_ops_2;
+
+    # prof_err.c - Auto-generated error table
+    initialize_prof_error_table;
+    initialize_prof_error_table_r;
+    et_prof_error_table;
+
+local:
+    *;
 };
