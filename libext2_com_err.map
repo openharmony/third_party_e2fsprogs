@@ -1,0 +1,50 @@
+# Copyright (c) 2026 Huawei Device Co., Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+{
+global:
+    # com_err.h - Public API
+    com_err;
+    com_err_va;
+    error_message;
+    set_com_err_hook;
+    reset_com_err_hook;
+    init_error_table;
+    set_com_err_gettext;
+    add_error_table;
+    remove_error_table;
+    add_to_error_table;
+    com_right;
+    com_right_r;
+    initialize_error_table_r;
+    free_error_table;
+    et_list_lock;
+    et_list_unlock;
+
+    # com_err.h - extern variable
+    com_err_hook;
+
+    # error_message.c - extern variable (used by other libraries)
+    _et_list;
+
+local:
+    *;
+};

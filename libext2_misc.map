@@ -1,0 +1,25 @@
+# Copyright (c) 2026 Huawei Device Co., Ltd.
+#
+# This library is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+{
+global:
+    # create_inode.h - Public API
+    populate_fs;
+    populate_fs2;
+    do_mknod_internal;
+    do_symlink_internal;
+    do_mkdir_internal;
+    do_write_internal;
+    add_link;
+    set_inode_extra;
+
+    # create_inode_libarchive.h - Public API
+    __populate_fs_from_tar;
+
+local:
+    *;
+};

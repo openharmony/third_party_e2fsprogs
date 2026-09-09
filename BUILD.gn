@@ -414,6 +414,8 @@ config("libext2_blkid_public_config") {
 
 ohos_shared_library("libext2_blkid") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_blkid.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   configs = [
     ":libext2_blkid-defaults",
     ":libext2-headers",
@@ -462,6 +464,8 @@ config("libext2_e2p-defaults") {
 
 ohos_shared_library("libext2_e2p") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_e2p.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   sources = [
     "${E2FSPROGS_DIR}/lib/e2p/encoding.c",
     "${E2FSPROGS_DIR}/lib/e2p/errcode.c",
@@ -521,6 +525,8 @@ config("libext2_com_err-defaults") {
 
 ohos_shared_library("libext2_com_err") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_com_err.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   sources = [
     "${E2FSPROGS_DIR}/lib/et/com_err.c",
     "${E2FSPROGS_DIR}/lib/et/com_right.c",
@@ -558,6 +564,8 @@ config("libext2fs-defaults") {
 
 ohos_shared_library("libext2fs") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2fs.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   sources = [
     "${E2FSPROGS_DIR}/lib/ext2fs/alloc.c",
     "${E2FSPROGS_DIR}/lib/ext2fs/alloc_sb.c",
@@ -706,6 +714,8 @@ config("libext2_support-defaults") {
 
 ohos_shared_library("libext2_quota") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_quota.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   sources = [
     "${E2FSPROGS_DIR}/lib/support/devname.c",
     "${E2FSPROGS_DIR}/lib/support/dict.c",
@@ -780,6 +790,8 @@ config("libext2_uuid-defaults") {
 
 ohos_shared_library("libext2_uuid") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_uuid.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   sources = [
     "${E2FSPROGS_DIR}/lib/uuid/clear.c",
     "${E2FSPROGS_DIR}/lib/uuid/compare.c",
@@ -821,6 +833,8 @@ config("libext2_misc-defaults") {
 
 ohos_shared_library("libext2_misc") {
   branch_protector_ret = "pac_ret"
+  version_script = "libext2_misc.map"
+  ldflags = [ "-Wl,--exclude-libs=ALL" ]
   configs = [ ":libext2_misc-defaults" ]
   sources = [
     "${E2FSPROGS_DIR}/misc/create_inode.c",
